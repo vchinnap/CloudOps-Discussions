@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+
 ## Cloud Operations Discussions
 ## Introduction
 

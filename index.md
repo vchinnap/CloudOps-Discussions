@@ -1,3 +1,4 @@
 - [Introduction]({{ site.baseurl }}/docs/introduction.md)
 - [Getting Started]({{ site.baseurl }}/docs/getting-started.md)
-- [Discussions](https://github.com/vchinnap/CloudOps-Confluence/discussions)
+- [Town Square](https://github.com/vchinnap/CloudOps-Confluence/discussions)
+- [EC2 Discussions](https://github.com/vchinnap/HCOPS-TREO-REPOS/discussions)

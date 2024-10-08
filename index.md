@@ -17,28 +17,31 @@ CloudOps-Discussions is a documentation platform designed to manage cloud operat
 
 ## Discussions
 
-<div id="discussions">
-    <div class="discussion-item">Enable Hibernate for EC2 Instances</div>
-    <div class="discussion-item">Provision the EC2 instance upgraded version to production</div>
-    <div class="discussion-item">Version upgrade</div>
-    <div class="discussion-item">Provision EC2 Instance using CDK</div>
-    <div class="discussion-item">Update the EC2 CLI version</div>
-</div>
+<div class="discussion-item">Enable Hibernate for EC2 Instances</div>
+<div class="discussion-item">Provision the EC2 instance upgraded version to production</div>
+<div class="discussion-item">Version upgrade</div>
+<div class="discussion-item">Provision EC2 Instance using CDK</div>
+<div class="discussion-item">Update the EC2 CLI version</div>
 
 <script>
     function searchDiscussions() {
-        var input, filter, items, item, i, txtValue;
-        input = document.getElementById('searchInput');
-        filter = input.value.toLowerCase();
-        items = document.getElementsByClassName('discussion-item');
+        var input = document.getElementById('searchInput');
+        var filter = input.value.toLowerCase();
+        var items = document.getElementsByClassName('discussion-item');
 
-        for (i = 0; i < items.length; i++) {
-            item = items[i];
-            txtValue = item.textContent || item.innerText;
-            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var text = item.textContent || item.innerText;
+
+            // If the filter text matches, show the item, otherwise hide it
+            if (text.toLowerCase().indexOf(filter) > -1) {
                 item.style.display = "";
             } else {
                 item.style.display = "none";
+            }
+        }
+    }
+</script>
             }
         }
     }

@@ -1,4 +1,4 @@
-theme: jekyll-theme-cayman  # Or any theme from GitHub Pages-supported themes
+theme: jekyll-theme-cayman  # You can choose another theme if you'd like
 title: My Project Documentation
 description: All the important information about My Project
-baseurl: "/CloudOps-Confluence"
+baseurl: "/CloudOps-Confluence"  # Replace with your repository name

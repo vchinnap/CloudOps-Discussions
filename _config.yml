@@ -1,6 +1,5 @@
 theme: jekyll-theme-cayman  # Or any theme from GitHub Pages-supported themes
-title: My Project Documentation
-description: All the important information about My Project
+title: Cloud Operations
 baseurl: "/CloudOps-Confluence"  ## Set the baseurl to your repository name
 plugins:
   - jekyll-include-cache

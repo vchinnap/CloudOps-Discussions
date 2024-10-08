@@ -4,5 +4,5 @@ baseurl: "/CloudOps-Confluence"
 theme: jekyll-theme-cayman
 plugins:
   - jekyll-toc
-github:
-  is_project_page: false
+#github:
+ # is_project_page: false

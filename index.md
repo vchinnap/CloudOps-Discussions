@@ -3,6 +3,8 @@
 **CloudOps-Discussions**, powered by **GitHub Discussions**, centralizes all cloud operations, enabling real-time collaboration, transparent incident management, and knowledge sharing. It empowers **SREs** to streamline reliability efforts with full visibility by faster incident resolution and continuous improvement.
 
 ### Click on [Town Square](https://github.com/vchinnap/CloudOps-Discussions/discussions/categories/town-square) for community engagement.
+### Click on [Town Square](https://github.com/vchinnap/town-square/discussions) for community engagement.
+
 
 > **Note**: This project is maintained by the CloudOps team to streamline cloud operations.
 

@@ -1,10 +1,14 @@
----
-layout: default
----
 
 # Welcome to Project Documentation
 
 This is the main page of your project documentation.
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/docs">Documentation</a></li>
+    </ul>
+</nav>
 
 ## Sections
 

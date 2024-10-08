@@ -27,7 +27,6 @@ CloudOps-Discussions is a documentation platform designed to manage cloud operat
         input = document.getElementById('searchInput');
         filter = input.value.toLowerCase();
         items = document.getElementsByClassName('discussion-item');
-
         for (i = 0; i < items.length; i++) {
             item = items[i];
             txtValue = item.textContent || item.innerText;

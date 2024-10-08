@@ -1,15 +1,44 @@
+/* General Styling */
 body {
-    background-color: #f0f0f0;
+    background-color: #f4f4f4;
     color: #333;
     font-family: "Arial", sans-serif;
 }
 
+/* Header */
 header {
     background-color: #2c3e50;
     color: white;
     padding: 20px;
+    text-align: center;
 }
 
+/* Navigation Bar */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    background-color: #111;
+}
+
+/* Footer */
 footer {
     background-color: #2c3e50;
     color: white;

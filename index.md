@@ -5,7 +5,7 @@
 ### Click on [Town Square](https://github.com/vchinnap/town-square/discussions) for community engagement.
 
 
-> **Note**: This project is maintained by the CloudOps team to streamline cloud operations.
+> **Note**: This project is maintained by the  team to streamline operations.
 
 ## Features
 - **Centralized Documentation**: Keep all your cloud operations documentation in one place.

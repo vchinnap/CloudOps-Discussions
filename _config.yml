@@ -1,7 +1,7 @@
 title: Cloud Operations
 description: "All important discussions and documentation about Cloud Operations updated"
 baseurl: "/CloudOps-Confluence"
-theme: jekyll-theme-cayman
+theme: jekyll-theme-architect
 plugins:
   - jekyll-toc
 github:

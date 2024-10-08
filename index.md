@@ -2,7 +2,7 @@
 
 CloudOps-Discussions is a documentation platform designed to manage cloud operations. It offers **features** like comprehensive documentation, integration with GitHub, and easy navigation for all team members.
 
-### Click on [Town Square](https://github.com/vchinnap/CloudOps-Confluence/discussionscategories/town-square) for community engagement.
+### Click on [Town Square](https://github.com/vchinnap/CloudOps-Confluence/discussions/categories/town-square) for community engagement.
 
 > **Note**: This project is maintained by the CloudOps team to streamline cloud operations.
 

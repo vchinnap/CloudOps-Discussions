@@ -1,17 +1,19 @@
 # CloudOps-Confluence
 
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+Welcome to the CloudOps-Confluence documentation.
 
-## Introduction
+<!-- Custom button to navigate to Discussions -->
+<div style="text-align: center; margin-top: 20px;">
+  <a href="https://github.com/vchinnap/CloudOps-Confluence/discussions" class="btn" style="padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">
+    Go to Discussions
+  </a>
+</div>
 
-CloudOps-Confluence is a documentation platform designed to manage cloud operations. It offers **features** like comprehensive documentation, integration with GitHub, and easy navigation for all team members.
+## Documentation
 
-> **Note**: This project is maintained by the CloudOps team to streamline cloud operations.
+Here are some useful sections of the documentation:
 
-## Features
-
-- **Centralized Documentation**: Keep all your cloud operations documentation in one place.
-- **Easy Navigation**: Quickly find the information you need with a searchable interface.
-- **Integration with GitHub**: Link directly to issues, discussions, and pull requests.
-
-### click on the following link [Town Square](https://github.com/vchinnap/CloudOps-Confluence/discussions)
+- [Introduction]({{ site.baseurl }}/docs/introduction.md)
+- [Getting Started]({{ site.baseurl }}/docs/getting-started.md)
+- [Town Square Discussions](https://github.com/vchinnap/CloudOps-Confluence/discussions)
+- [EC2 Discussions](https://github.com/vchinnap/HCOPS-TREO-REPOS/discussions)

@@ -1,3 +1,7 @@
+# CloudOps-Confluence
+
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 ## Introduction
 
 CloudOps-Confluence is a documentation platform designed to manage cloud operations. It offers **features** like comprehensive documentation, integration with GitHub, and easy navigation for all team members.

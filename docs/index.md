@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/style.css">
 
 <!-- Navigation Bar -->
 <nav>

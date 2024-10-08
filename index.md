@@ -11,3 +11,19 @@ CloudOps-Discussions is a documentation platform designed to manage cloud operat
 - **Easy Navigation**: Quickly find the information you need with a searchable interface.
 - **Integration with GitHub**: Link directly to issues, discussions, and pull requests..
 
+## Search Discussions
+
+<input type="text" id="searchInput" onkeyup="searchDiscussions()" placeholder="Search discussions..." style="width: 100%; padding: 12px; font-size: 16px; margin-bottom: 20px;"/>
+
+## Discussions
+
+<div id="discussions">
+    <div class="discussion-item">Enable Hibernate for EC2 Instances</div>
+    <div class="discussion-item">Provision the EC2 instance upgraded version to production</div>
+    <div class="discussion-item">Version upgrade</div>
+    <div class="discussion-item">Provision EC2 Instance using CDK</div>
+    <div class="discussion-item">Update the EC2 CLI version</div>
+    <!-- Add more discussion items as needed -->
+</div>
+
+<script src="scripts.js"></script>

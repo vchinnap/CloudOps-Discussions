@@ -1,47 +1,43 @@
-/* General Styling */
+/* General Page Styling */
 body {
-    background-color: #f4f4f4;
-    color: #333;
-    font-family: "Arial", sans-serif;
+    font-family: "Helvetica", "Arial", sans-serif;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
 }
 
-/* Header */
-header {
+/* Header Styling */
+.site-header {
     background-color: #2c3e50;
     color: white;
     padding: 20px;
     text-align: center;
 }
 
-/* Navigation Bar */
-nav ul {
+/* Navigation Menu */
+.nav-menu {
     list-style-type: none;
-    margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #333;
 }
 
-nav ul li {
-    float: left;
+.nav-menu li {
+    display: inline;
+    margin-right: 20px;
 }
 
-nav ul li a {
-    display: block;
+.nav-menu li a {
     color: white;
-    text-align: center;
-    padding: 14px 20px;
     text-decoration: none;
 }
 
-nav ul li a:hover {
-    background-color: #111;
+.nav-menu li a:hover {
+    text-decoration: underline;
 }
 
-/* Footer */
-footer {
-    background-color: #2c3e50;
+/* Footer Styling */
+.site-footer {
+    background-color: #333;
     color: white;
-    padding: 10px;
+    padding: 20px;
     text-align: center;
 }

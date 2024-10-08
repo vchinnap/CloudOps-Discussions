@@ -17,4 +17,4 @@ This is the main page of your project documentation.
 
 - [Introduction]({{ site.baseurl }}/docs/introduction.md)
 - [Getting Started]({{ site.baseurl }}/docs/getting-started.md)
-- [Usage]({{ site.baseurl }}/docs/usage.md)
+- [Usage]({{ site.baseurl }}/docs/index.md)

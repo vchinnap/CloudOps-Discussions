@@ -1,3 +1,4 @@
 theme: jekyll-theme-slate
-title: Project Documentation
-description: Documentation for my project
+title: My Project Documentation
+description: All the important information about My Project
+baseurl: "/CloudOps-Confluence"

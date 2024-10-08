@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
 
 # Welcome to Project Documentation
 
@@ -9,7 +10,7 @@ This is the main page of your project documentation.
         <li><a href="/[discussions](https://github.com/vchinnap/CloudOps-Confluence/discussions)">town square</a></li>
     </ul>
 </nav>
-<link rel="stylesheet" href="assets/css/style.css">
+
 
 
 ## Sections

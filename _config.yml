@@ -2,5 +2,5 @@ title: "Cloud Ops"
 description: "All important discussions and documentation about Cloud Operations are updated here."
 baseurl: "/CloudOps-Confluence"
 theme: jekyll-theme-cayman
-github:
-  is_project_page: false
+#github:
+#  is_project_page: false

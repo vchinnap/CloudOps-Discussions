@@ -1,8 +1,8 @@
-# Cloud Operations Discussions
+# Discussions
 
 ## Introduction
 
-CloudOps-Confluence is a documentation platform designed to manage cloud operations. It offers **features** like comprehensive documentation, integration with GitHub, and easy navigation for all team members.
+CloudOps-Discussions is a documentation platform designed to manage cloud operations. It offers **features** like comprehensive documentation, integration with GitHub, and easy navigation for all team members.
 
 > **Note**: This project is maintained by the CloudOps team to streamline cloud operations.
 

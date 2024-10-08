@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
 
-## Cloud Operations Discussions
 ## Introduction
 
 CloudOps-Discussions is a documentation platform designed to manage cloud operations. It offers **features** like comprehensive documentation, integration with GitHub, and easy navigation for all team members.

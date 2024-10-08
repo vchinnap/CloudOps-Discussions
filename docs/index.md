@@ -6,7 +6,7 @@ This is the main page of your project documentation.
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/about">About</a></li>
-        <li><a href="/docs">Documentation</a></li>
+        <li><a href="/[discussions](https://github.com/vchinnap/CloudOps-Confluence/discussions)">town square</a></li>
     </ul>
 </nav>
 

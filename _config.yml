@@ -1,5 +1,5 @@
-remote_theme: "mmistakes/minimal-mistakes"  # Use the Minimal Mistakes theme
-title: CloudOps-Confluence
+theme: jekyll-theme-cayman  # Or any theme from GitHub Pages-supported themes
+title: My Project Documentation
 description: All the important information about My Project
 baseurl: "/CloudOps-Confluence"  ## Set the baseurl to your repository name
 plugins:

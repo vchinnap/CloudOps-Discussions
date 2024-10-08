@@ -21,4 +21,21 @@ CloudOps-Discussions is a documentation platform designed to manage cloud operat
     <div class="discussion-item">What is the difference between Hibernation vs Stopping</div>
     <!-- Add more discussion items as needed -->
 </div>
-<script src="/assets/js/scripts.js"></script>
+<script>
+    function searchDiscussions() {
+        var input, filter, items, item, i, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toLowerCase();
+        items = document.getElementsByClassName('discussion-item');
+
+        for (i = 0; i < items.length; i++) {
+            item = items[i];
+            txtValue = item.textContent || item.innerText;
+            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                item.style.display = "";
+            } else {
+                item.style.display = "none";
+            }
+        }
+    }
+</script>

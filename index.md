@@ -10,4 +10,4 @@ CloudOps-Confluence is a documentation platform designed to manage cloud operati
 - **Easy Navigation**: Quickly find the information you need with a searchable interface.
 - **Integration with GitHub**: Link directly to issues, discussions, and pull requests.
 
-### click on the following link [Town Square](https://github.com/vchinnap/CloudOps-Confluence/discussions)
+### Click on [Town Square](https://github.com/vchinnap/CloudOps-Confluence/discussions) for community engagement.

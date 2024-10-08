@@ -2,3 +2,6 @@ remote_theme: "mmistakes/minimal-mistakes"  # Use the Minimal Mistakes theme
 title: CloudOps-Confluence
 description: All the important information about My Project
 baseurl: "/CloudOps-Confluence"  # Set the baseurl to your repository name
+plugins:
+  - jekyll-include-cache
+

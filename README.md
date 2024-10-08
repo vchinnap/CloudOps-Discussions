@@ -1,2 +1,0 @@
-# CloudOps-Confluence
- Git-Confluence

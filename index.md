@@ -18,12 +18,6 @@ CloudOps-Discussions is a documentation platform designed to manage cloud operat
 ## Discussions
 
 <div id="discussions">
-    <div class="discussion-item">Enable Hibernate for EC2 Instances</div>
-    <div class="discussion-item">Provision the EC2 instance upgraded version to production</div>
-    <div class="discussion-item">Version upgrade</div>
-    <div class="discussion-item">Provision EC2 Instance using CDK</div>
-    <div class="discussion-item">Update the EC2 CLI version</div>
+    <div class="discussion-item">What is the difference between Hibernation vs Stopping</div>
     <!-- Add more discussion items as needed -->
 </div>
-
-<script src="scripts.js"></script>

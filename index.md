@@ -1,3 +1,3 @@
 - [Introduction]({{ site.baseurl }}/docs/introduction.md)
 - [Getting Started]({{ site.baseurl }}/docs/getting-started.md)
-- [Usage]({{ site.baseurl }}/discussions)
+- [discussions]({{ https://github.com/vchinnap/CloudOps-Confluence }}/discussions)

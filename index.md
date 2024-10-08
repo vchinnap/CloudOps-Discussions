@@ -5,7 +5,7 @@
    <ul>
        <li><a href="/">Home</a></li>
        <li><a href="{{ site.baseurl }}/about">About</a></li>
-       <li><a href="{{ site.baseurl }}/docs">Documentation</a></li>
+       <li><a href="{{ site.baseurl }}/docs/index.md">Documentation</a></li>
    </ul>
 </nav>
 

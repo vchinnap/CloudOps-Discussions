@@ -2,8 +2,7 @@ name: Count Discussions
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight UTC
+
 
 jobs:
   count-discussions:
@@ -18,7 +17,7 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install @octokit/graphql
+        run: npm install @octokit/graphql node-fetch
 
       - name: Count discussions
         env:
@@ -27,6 +26,7 @@ jobs:
           node -e "
           const runGraphQLQuery = async () => {
             const { graphql } = await import('@octokit/graphql');
+            const fetch = (await import('node-fetch')).default;
           
             const query = \`
               query(\$owner: String!, \$repo: String!) {
@@ -50,6 +50,9 @@ jobs:
                 headers: {
                   authorization: \`token \${process.env.G_TOKEN}\`,
                 },
+                request: {
+                  fetch: fetch
+                }
               });
           
               console.log(\`Total discussions: \${result.repository.discussions.totalCount}\`);

@@ -15,22 +15,20 @@ jobs:
         with:
           script: |
             const { discussion } = context.payload;
-            const category = discussion.category.name;
-            const labels = discussion.labels.map(label => label.name.toLowerCase());
+            const category = discussion.category.name;  // Preserve case for the category name
+            const labels = discussion.labels.map(label => label.name.toLowerCase());  // Lowercase labels for comparison
 
-            // Define allowed labels for each category
+            // Define allowed labels for each category under "Tickets" section
             const allowedLabels = {
-              'servicenow': ['incident', 'change ticket'],
-              'jira': ['bug', 'task', 'story']
+              'ServiceNow': ['incident', 'change ticket'],  // Case-sensitive category name
+              'JIRA': ['bug', 'task', 'story']  // Case-sensitive category name
             };
 
-            // Check if any labels are present
-            if (labels.length === 0) {
-              core.setFailed(`No labels found for this discussion. You must apply a valid label.`);
-            } else if (allowedLabels[category.toLowerCase()]) {
-              const requiredLabels = allowedLabels[category.toLowerCase()];
+            // Check if the discussion category exists in the allowedLabels object
+            if (allowedLabels[category]) {
+              const requiredLabels = allowedLabels[category];
 
-              // Check if the discussion labels include any of the allowed labels
+              // Check if any valid label is applied
               const hasValidLabel = labels.some(label => requiredLabels.includes(label));
 
               if (!hasValidLabel) {
@@ -51,8 +49,8 @@ jobs:
             **Label issue detected for the category "${{ github.event.discussion.category.name }}".**
             Please use one of the allowed labels based on the discussion category:
             - For ServiceNow: "Incident", "Change Ticket"
-            - For Jira: "Bug", "Task", "Story"
-            - **No discussion should be created without at least one label.**
+            - For JIRA: "Bug", "Task", "Story"
+            - **No discussion should be created without at least one valid label.**
 
       - name: Lock discussion if invalid or empty labels
         if: failure()

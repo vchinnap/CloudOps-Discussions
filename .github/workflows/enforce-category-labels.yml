@@ -17,7 +17,8 @@ jobs:
         node-version: 18
 
     - name: Install dependencies
-      run: npm install node-fetch@2
+      run: |
+        npm install @octokit/graphql node-fetch@2
 
     - name: Count discussions
       run: |

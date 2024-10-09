@@ -1,4 +1,4 @@
-name: Count Discussions 
+name: Count Discussions by Category
 
 on:
   workflow_dispatch:  # Allows manual triggering
@@ -14,7 +14,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Switch to node 18 or later, as required by @octokit/graphql
+          node-version: '18'  # Node.js 18 or later, as required by @octokit/graphql
 
       - name: Install node-fetch
         run: npm install node-fetch@2
@@ -24,7 +24,7 @@ jobs:
           node -e "
           const fetch = require('node-fetch');
           const { graphql } = require('@octokit/graphql');
-          
+
           const runGraphQLQuery = async () => {
             const query = `
               query($owner: String!, $repo: String!) {
@@ -34,12 +34,12 @@ jobs:
                   }
                 }
               }`;
-          
+
             const variables = {
               owner: process.env.GITHUB_REPOSITORY.split('/')[0],
               repo: process.env.GITHUB_REPOSITORY.split('/')[1]
             };
-          
+
             try {
               const result = await graphql({
                 query,
@@ -49,14 +49,14 @@ jobs:
                 },
                 request: { fetch },  // Attach fetch implementation
               });
-          
+
               console.log(\`Total discussions: \${result.repository.discussions.totalCount}\`);
             } catch (error) {
               console.error('Error:', error);
             }
           };
-          
+
           runGraphQLQuery();
           "
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token to authenticate
+          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}  # Use GitHub token to authenticate

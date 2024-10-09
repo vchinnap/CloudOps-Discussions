@@ -17,15 +17,15 @@ jobs:
         node-version: 18
 
     - name: Install dependencies
-      run: npm install node-fetch@2 @octokit/graphql
+      run: npm install node-fetch@2
 
     - name: Count discussions
       run: |
         node -e "
-        const fetch = require('node-fetch');  // Fetch implementation
-        const { graphql } = require('@octokit/graphql');
-
         const runGraphQLQuery = async () => {
+          const fetch = await import('node-fetch');  // Dynamic import for fetch
+          const { graphql } = await import('@octokit/graphql');  // Dynamic import for Octokit
+
           const query = \`
             query($owner: String!, $repo: String!) {
               repository(owner: $owner, name: $repo) {
@@ -47,7 +47,7 @@ jobs:
               headers: {
                 authorization: \`token \${process.env.G_TOKEN}\`  // Use G_TOKEN
               },
-              request: { fetch }  // Attach fetch implementation
+              request: { fetch: fetch.default }  // Use the imported fetch
             });
 
             console.log(\`Total discussions: \${result.repository.discussions.totalCount}\`);

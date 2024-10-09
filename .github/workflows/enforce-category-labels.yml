@@ -61,10 +61,10 @@ jobs:
           script: |
             const { discussion } = context.payload;
 
-            // Post a comment on the discussion
-            await github.rest.teams.createDiscussionCommentInOrg({
-              org: context.repo.owner,
-              team_slug: context.repo.repo,
+            // Post a comment on the repository discussion
+            await github.rest.discussions.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               discussion_number: discussion.number,
               body: `**Label issue detected for the category "${discussion.category.name}".**\n` +
                     `Please use one of the allowed labels based on the discussion category:\n` +

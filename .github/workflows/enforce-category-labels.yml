@@ -3,7 +3,6 @@ name: Count Discussions
 on:
   workflow_dispatch:
 
-
 jobs:
   count-discussions:
     runs-on: ubuntu-latest
@@ -22,11 +21,16 @@ jobs:
       - name: Count discussions
         env:
           G_TOKEN: ${{ secrets.G_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           node -e "
           const runGraphQLQuery = async () => {
             const { graphql } = await import('@octokit/graphql');
             const fetch = (await import('node-fetch')).default;
+          
+            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+            console.log('Owner:', owner);
+            console.log('Repo:', repo);
           
             const query = \`
               query(\$owner: String!, \$repo: String!) {
@@ -38,10 +42,7 @@ jobs:
               }
             \`;
           
-            const variables = {
-              owner: process.env.GITHUB_REPOSITORY.split('/')[0],
-              repo: process.env.GITHUB_REPOSITORY.split('/')[1]
-            };
+            const variables = { owner, repo };
           
             try {
               const result = await graphql({
@@ -58,6 +59,9 @@ jobs:
               console.log(\`Total discussions: \${result.repository.discussions.totalCount}\`);
             } catch (error) {
               console.error('Error:', error);
+              if (error.errors) {
+                error.errors.forEach(e => console.error('GraphQL Error:', e.message));
+              }
             }
           };
           

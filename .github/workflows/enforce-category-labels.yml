@@ -35,9 +35,9 @@ jobs:
               // If there are no labels, add a comment requesting labels
               if (labels.length === 0) {
                 console.log(`No labels found for category "${category}". Adding a comment to the discussion...`);
-                await github.rest.teams.createDiscussionCommentInOrg({
-                  org: context.repo.owner,
-                  team_slug: context.repo.repo,
+                await github.rest.discussions.comments.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
                   discussion_number: discussion.number,
                   body: `**Label issue detected for the category "${category}".**\n` +
                         `Please use one of the allowed labels:\n` +
@@ -53,9 +53,9 @@ jobs:
 
               if (!hasValidLabel) {
                 console.log(`Invalid labels for category "${category}". Adding a comment to the discussion...`);
-                await github.rest.teams.createDiscussionCommentInOrg({
-                  org: context.repo.owner,
-                  team_slug: context.repo.repo,
+                await github.rest.discussions.comments.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
                   discussion_number: discussion.number,
                   body: `**Invalid label issue detected for the category "${category}".**\n` +
                         `Allowed labels are: ${requiredLabels.join(', ')}.\n` +
@@ -65,9 +65,9 @@ jobs:
               }
             } else {
               console.log(`Invalid category "${category}". Adding a comment to the discussion...`);
-              await github.rest.teams.createDiscussionCommentInOrg({
-                org: context.repo.owner,
-                team_slug: context.repo.repo,
+              await github.rest.discussions.comments.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
                 discussion_number: discussion.number,
                 body: `**Invalid category detected.**\n` +
                       `Please select a valid category.`

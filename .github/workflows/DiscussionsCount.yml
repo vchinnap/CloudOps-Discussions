@@ -21,7 +21,8 @@ jobs:
                 if ($d.labels | length) == 0 then
                   .["No Label"] += 1 // 0
                 else
-                  reduce ($d.labels[] | .name) as $label (.; .[$label] += 1 // 0)
+                  ($d.labels[] | .name) as $label | 
+                  .[$label] += 1 // 0
                 end)' > discussions_by_label.json
 
     - name: Display Discussions Count by Label

@@ -1,0 +1,36 @@
+name: Get Discussions Count by Label
+
+on:
+  workflow_dispatch:
+
+jobs:
+  get-discussions-count-by-label:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Fetch Discussions Count by Label
+      id: get_count_by_label
+      run: |
+        curl -s \
+          -H "Authorization: Bearer ${{ secrets.G_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/discussions \
+          | jq 'reduce .[] as $d ({}; 
+                ($d.labels[]?.name // "No Label") as $label | 
+                .[$label] += 1)' > discussions_by_label.json
+
+    - name: Display Discussions Count by Label
+      run: |
+        cat discussions_by_label.json
+
+    - name: Set Discussions Count by Label as Output
+      id: set_output
+      run: |
+        discussions_by_label=$(cat discussions_by_label.json)
+        echo "::set-output name=discussions_by_label::$discussions_by_label"
+
+    - name: Print Discussions Count by Label in Workflow
+      run: |
+        echo "The count of discussions by label is: ${{ steps.set_output.outputs.discussions_by_label }}"

@@ -42,12 +42,10 @@ jobs:
               }
             \`;
           
-            const variables = { owner, repo };
-          
             try {
               const result = await graphql({
                 query,
-                variables,
+                variables: { owner, repo },
                 headers: {
                   authorization: \`token \${process.env.G_TOKEN}\`,
                 },

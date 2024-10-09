@@ -1,39 +1,58 @@
-name: Count Discussions by Category
+name: Count Discussions
 
 on:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight UTC
 
 jobs:
-  count_discussions_by_category:
+  count-discussions:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Get discussions count by category
-        uses: actions/github-script@v6
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          script: |
-            // Fetch discussions for the repository using the repository discussions API
-            const allDiscussions = await github.paginate(github.rest.discussions.list, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              per_page: 100  // Adjust as needed for larger repositories
-            });
+          node-version: '16'
 
-            // Initialize an empty object to store category counts
-            const categoryCounts = {};
+      - name: Install dependencies
+        run: npm install @octokit/graphql
 
-            // Loop through discussions and count by category
-            allDiscussions.forEach(discussion => {
-              const category = discussion.category.name;
-              if (categoryCounts[category]) {
-                categoryCounts[category] += 1;
-              } else {
-                categoryCounts[category] = 1;
+      - name: Count discussions
+        env:
+          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
+        run: |
+          node -e '
+          const { graphql } = require("@octokit/graphql");
+          
+          async function countDiscussions() {
+            const query = `
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  discussions {
+                    totalCount
+                  }
+                }
               }
+            `;
+            
+            const variables = {
+              owner: process.env.GITHUB_REPOSITORY.split("/")[0],
+              repo: process.env.GITHUB_REPOSITORY.split("/")[1]
+            };
+            
+            const result = await graphql({
+              query,
+              variables,
+              headers: {
+                authorization: `token ${process.env.GITHUB_TOKEN}`,
+              },
             });
-
-            // Log the category counts in JSON format
-            console.log(JSON.stringify(categoryCounts, null, 2));
-
-            // Optionally, display the data in table format
-            console.table(categoryCounts);
+            
+            console.log(`Total discussions: ${result.repository.discussions.totalCount}`);
+          }
+          
+          countDiscussions();
+          '

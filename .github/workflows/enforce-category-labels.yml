@@ -1,62 +1,62 @@
-name: Count Discussions by Category
+name: Count Discussions
 
 on:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   count_discussions:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'  # Node.js 18 or later, as required by @octokit/graphql
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Install node-fetch
-        run: npm install node-fetch@2
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-      - name: Run GraphQL query
-        run: |
-          node -e "
-          const fetch = require('node-fetch');
-          const { graphql } = require('@octokit/graphql');
+    - name: Install dependencies
+      run: npm install node-fetch@2 @octokit/graphql
 
-          const runGraphQLQuery = async () => {
-            const query = `
-              query($owner: String!, $repo: String!) {
-                repository(owner: $owner, name: $repo) {
-                  discussions {
-                    totalCount
-                  }
+    - name: Count discussions
+      run: |
+        node -e "
+        const fetch = require('node-fetch');  // Fetch implementation
+        const { graphql } = require('@octokit/graphql');
+
+        const runGraphQLQuery = async () => {
+          const query = \`
+            query($owner: String!, $repo: String!) {
+              repository(owner: $owner, name: $repo) {
+                discussions {
+                  totalCount
                 }
-              }`;
+              }
+            }\`;
 
-            const variables = {
-              owner: process.env.GITHUB_REPOSITORY.split('/')[0],
-              repo: process.env.GITHUB_REPOSITORY.split('/')[1]
-            };
-
-            try {
-              const result = await graphql({
-                query,
-                variables,
-                headers: {
-                  authorization: \`token \${process.env.GITHUB_TOKEN}\`,
-                },
-                request: { fetch },  // Attach fetch implementation
-              });
-
-              console.log(\`Total discussions: \${result.repository.discussions.totalCount}\`);
-            } catch (error) {
-              console.error('Error:', error);
-            }
+          const variables = {
+            owner: process.env.GITHUB_REPOSITORY.split('/')[0],
+            repo: process.env.GITHUB_REPOSITORY.split('/')[1]
           };
 
-          runGraphQLQuery();
-          "
-        env:
-          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}  # Use GitHub token to authenticate
+          try {
+            const result = await graphql({
+              query,
+              variables,
+              headers: {
+                authorization: \`token \${process.env.G_TOKEN}\`  // Use G_TOKEN
+              },
+              request: { fetch }  // Attach fetch implementation
+            });
+
+            console.log(\`Total discussions: \${result.repository.discussions.totalCount}\`);
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        };
+
+        runGraphQLQuery();
+        "
+      env:
+        G_TOKEN: ${{ secrets.G_TOKEN }}

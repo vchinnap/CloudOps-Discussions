@@ -32,13 +32,18 @@ jobs:
             if (allowedLabels[category]) {
               const requiredLabels = allowedLabels[category];
 
-              // If there are no labels, it's an error, and we need to delete the discussion
+              // If there are no labels, add a comment requesting labels
               if (labels.length === 0) {
-                console.log(`No labels found for category "${category}". Deleting discussion...`);
-                await github.rest.discussions.delete({
+                console.log(`No labels found for category "${category}". Adding a comment to the discussion...`);
+                await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  discussion_number: discussion.number
+                  issue_number: discussion.number,
+                  body: `**Label issue detected for the category "${category}".**\n` +
+                        `Please use one of the allowed labels:\n` +
+                        `- For ServiceNow: "Incident", "CHG"\n` +
+                        `- For JIRA: "Bug", "Task", "Story"\n` +
+                        `- **No discussion should be created without at least one valid label.**`
                 });
                 return;
               }
@@ -47,39 +52,24 @@ jobs:
               const hasValidLabel = labels.some(label => requiredLabels.includes(label.name.toLowerCase()));
 
               if (!hasValidLabel) {
-                console.log(`Invalid labels for category "${category}". Deleting discussion...`);
-                await github.rest.discussions.delete({
+                console.log(`Invalid labels for category "${category}". Adding a comment to the discussion...`);
+                await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  discussion_number: discussion.number
+                  issue_number: discussion.number,
+                  body: `**Invalid label issue detected for the category "${category}".**\n` +
+                        `Allowed labels are: ${requiredLabels.join(', ')}.\n` +
+                        `Please update the labels accordingly.`
                 });
                 return;
               }
             } else {
-              console.log(`Invalid category "${category}". Deleting discussion...`);
-              await github.rest.discussions.delete({
+              console.log(`Invalid category "${category}". Adding a comment to the discussion...`);
+              await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                discussion_number: discussion.number
+                issue_number: discussion.number,
+                body: `**Invalid category detected.**\n` +
+                      `Please select a valid category.`
               });
             }
-
-
-
-
-#name: Print Discussion Payload for Debugging
-
-#on:
-#  discussion:
-#    types: [created, edited]
-
-#jobs:
-#  print_discussion_payload:
-#    runs-on: ubuntu-latest
-
-#    steps:
-#      - name: Print entire discussion payload
-#        uses: actions/github-script@v6
-#        with:
-#          script: |
-#            console.log('Full discussion payload:', JSON.stringify(context.payload, null, 2));

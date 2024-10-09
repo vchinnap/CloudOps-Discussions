@@ -1,74 +1,16 @@
-name: Enforce Category-Specific and Non-Empty Labels
+name: Print Discussion Payload for Debugging
 
 on:
   discussion:
     types: [created, edited]
 
 jobs:
-  enforce_category_labels:
+  print_discussion_payload:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check labels based on category
-        id: check_labels
+      - name: Print entire discussion payload
         uses: actions/github-script@v6
         with:
           script: |
-            const { discussion } = context.payload;
-
-            // Check if discussion object exists
-            if (!discussion) {
-              core.setFailed('Discussion object not found in payload.');
-              return;
-            }
-
-            const category = discussion.category?.name;
-            const labels = discussion.labels?.map(label => label.name.toLowerCase()) || [];
-
-            // Add logging to check the payload values
-            console.log(`Category: ${category}`);
-            console.log(`Labels: ${labels}`);
-
-            if (!category || !labels.length) {
-              core.setFailed('Category or labels not found in the discussion payload.');
-              return;
-            }
-
-            // Define allowed labels for each category under "Tickets" section
-            const allowedLabels = {
-              'ServiceNow': ['Incident', 'CHG'],  // Case-sensitive labels
-              'JIRA': ['bug', 'task', 'story']
-            };
-
-            // Check if the discussion category exists in the allowedLabels object
-            if (allowedLabels[category]) {
-              const requiredLabels = allowedLabels[category];
-
-              // Check if any valid label is applied
-              const hasValidLabel = labels.some(label => requiredLabels.includes(label));
-
-              if (!hasValidLabel) {
-                core.setFailed(`Invalid labels for category "${category}". Allowed labels are: ${requiredLabels.join(', ')}`);
-              }
-            } else {
-              core.setFailed(`Invalid category "${category}". This category is not configured with allowed labels.`);
-            }
-
-      - name: Comment on discussion if invalid or empty labels
-        if: failure()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const { discussion } = context.payload;
-
-            // Post a comment on the repository discussion
-            await github.rest.discussions.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              discussion_number: discussion.number,
-              body: `**Label issue detected for the category "${discussion.category.name}".**\n` +
-                    `Please use one of the allowed labels based on the discussion category:\n` +
-                    `- For ServiceNow: "Incident", "CHG"\n` +
-                    `- For JIRA: "Bug", "Task", "Story"\n` +
-                    `- **No discussion should be created without at least one valid label.**`
-            });
+            console.log('Full discussion payload:', JSON.stringify(context.payload, null, 2));

@@ -51,9 +51,7 @@ jobs:
             print(f"Failed to fetch discussions. Status code: {response.status_code}")
 
         with open('discussions_by_label.json', 'w') as f:
-            json.dump(count_by_label, f, indent=2)
-
-        print(f"discussions_by_label={json.dumps(count_by_label)}")
+            json.dump(count_by_label, f)
         EOF
 
     - name: Display Discussions Count by Label
@@ -62,7 +60,7 @@ jobs:
     - name: Set Discussions Count by Label as Output
       id: set_output
       run: |
-        discussions_by_label=$(cat discussions_by_label.json)
+        discussions_by_label=$(jq -c '.' discussions_by_label.json)
         echo "discussions_by_label=$discussions_by_label" >> $GITHUB_OUTPUT
 
     - name: Print Discussions Count by Label in Workflow

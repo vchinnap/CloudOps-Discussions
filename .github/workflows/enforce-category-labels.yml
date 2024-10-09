@@ -9,19 +9,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check labels based on category
-        id: check_labels
+      - name: Check if discussion payload exists
+        id: check_payload
         uses: actions/github-script@v6
         with:
           script: |
             const { discussion } = context.payload;
-            const category = discussion.category.name;  // Preserve case for the category name
-            const labels = discussion.labels.map(label => label.name.toLowerCase());  // Lowercase labels for comparison
+
+            // Check if discussion object exists
+            if (!discussion) {
+              core.setFailed('Discussion object not found in payload.');
+              return;
+            }
+
+            const category = discussion.category?.name;
+            const labels = discussion.labels?.map(label => label.name.toLowerCase());
+
+            // Add logging to check the payload values
+            console.log(`Category: ${category}`);
+            console.log(`Labels: ${labels}`);
+
+            if (!category || !labels) {
+              core.setFailed('Category or labels not found in the discussion payload.');
+              return;
+            }
 
             // Define allowed labels for each category under "Tickets" section
             const allowedLabels = {
-              'ServiceNow': ['incident', 'change ticket'],  // Case-sensitive category name
-              'JIRA': ['bug', 'task', 'story']  // Case-sensitive category name
+              'ServiceNow': ['incident', 'change ticket'],
+              'JIRA': ['bug', 'task', 'story']
             };
 
             // Check if the discussion category exists in the allowedLabels object
@@ -42,7 +58,7 @@ jobs:
         if: failure()
         uses: peter-evans/create-or-update-comment@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.G_TOKEN }}
           repository: ${{ github.repository }}
           issue-number: ${{ github.event.discussion.number }}
           body: |

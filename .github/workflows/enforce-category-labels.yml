@@ -2,6 +2,8 @@ name: Count Discussions
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight UTC
 
 jobs:
   count-discussions:
@@ -20,37 +22,41 @@ jobs:
 
       - name: Count discussions
         env:
-          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          node -e '
-          const { graphql } = require("@octokit/graphql");
+          node -e "
+          const runGraphQLQuery = async () => {
+            const { graphql } = await import('@octokit/graphql');
           
-          async function countDiscussions() {
-            const query = `
-              query($owner: String!, $repo: String!) {
-                repository(owner: $owner, name: $repo) {
+            const query = \`
+              query(\$owner: String!, \$repo: String!) {
+                repository(owner: \$owner, name: \$repo) {
                   discussions {
                     totalCount
                   }
                 }
               }
-            `;
-            
-            const variables = {
-              owner: process.env.GITHUB_REPOSITORY.split("/")[0],
-              repo: process.env.GITHUB_REPOSITORY.split("/")[1]
-            };
-            
-            const result = await graphql({
-              query,
-              variables,
-              headers: {
-                authorization: `token ${process.env.GITHUB_TOKEN}`,
-              },
-            });
-            
-            console.log(`Total discussions: ${result.repository.discussions.totalCount}`);
-          }
+            \`;
           
-          countDiscussions();
-          '
+            const variables = {
+              owner: process.env.GITHUB_REPOSITORY.split('/')[0],
+              repo: process.env.GITHUB_REPOSITORY.split('/')[1]
+            };
+          
+            try {
+              const result = await graphql({
+                query,
+                variables,
+                headers: {
+                  authorization: \`token \${process.env.GITHUB_TOKEN}\`,
+                },
+              });
+          
+              console.log(\`Total discussions: \${result.repository.discussions.totalCount}\`);
+            } catch (error) {
+              console.error('Error:', error);
+            }
+          };
+          
+          runGraphQLQuery();
+          "

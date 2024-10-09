@@ -42,7 +42,7 @@ jobs:
         if: failure()
         uses: peter-evans/create-or-update-comment@v2
         with:
-          token: ${{ secrets.G_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           issue-number: ${{ github.event.discussion.number }}
           body: |
@@ -51,14 +51,3 @@ jobs:
             - For ServiceNow: "Incident", "Change Ticket"
             - For JIRA: "Bug", "Task", "Story"
             - **No discussion should be created without at least one valid label.**
-
-      - name: Lock discussion if invalid or empty labels
-        if: failure()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            await github.rest.discussions.lock({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              discussion_number: context.payload.discussion.number
-            });

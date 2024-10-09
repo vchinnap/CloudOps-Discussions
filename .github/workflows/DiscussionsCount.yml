@@ -10,24 +10,54 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
     - name: Fetch Discussions Count by Label
       id: get_count_by_label
+      env:
+        GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
       run: |
-        curl -s \
-          -H "Authorization: Bearer ${{ secrets.G_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          "https://api.github.com/repos/${{ github.repository }}/discussions" \
-          | jq -c 'reduce .[] as $d ({}; 
-                if ($d.labels | length) == 0 then
-                  .["No Label"] += 1
-                else
-                  ($d.labels[] | .name) as $label | 
-                  .[$label] += 1
-                end)' > discussions_by_label.json
+        python - <<EOF
+        import requests
+        import json
+        import os
+
+        url = f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/discussions"
+        headers = {
+            'Authorization': f"Bearer {os.environ['GITHUB_TOKEN']}",
+            'Accept': 'application/vnd.github.v3+json'
+        }
+        response = requests.get(url, headers=headers)
+
+        count_by_label = {}
+        if response.status_code == 200:
+            discussions = response.json()
+            for discussion in discussions:
+                if not discussion['labels']:
+                    count_by_label['No Label'] = count_by_label.get('No Label', 0) + 1
+                else:
+                    for label in discussion['labels']:
+                        label_name = label['name']
+                        count_by_label[label_name] = count_by_label.get(label_name, 0) + 1
+        else:
+            print(f"Failed to fetch discussions. Status code: {response.status_code}")
+
+        with open('discussions_by_label.json', 'w') as f:
+            json.dump(count_by_label, f, indent=2)
+
+        print(f"discussions_by_label={json.dumps(count_by_label)}")
+        EOF
 
     - name: Display Discussions Count by Label
-      run: |
-        cat discussions_by_label.json
+      run: cat discussions_by_label.json
 
     - name: Set Discussions Count by Label as Output
       id: set_output

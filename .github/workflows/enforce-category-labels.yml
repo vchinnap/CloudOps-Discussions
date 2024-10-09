@@ -24,7 +24,7 @@ jobs:
 
             // Define allowed labels for each category
             const allowedLabels = {
-              'ServiceNow': ['incident', 'chg'],  // Case-sensitive allowed labels for ServiceNow
+              'ServiceNow': ['Incident', 'CHG'],  // Case-sensitive allowed labels for ServiceNow
               'JIRA': ['bug', 'task', 'story']
             };
 
@@ -35,10 +35,10 @@ jobs:
               // If there are no labels, add a comment requesting labels
               if (labels.length === 0) {
                 console.log(`No labels found for category "${category}". Adding a comment to the discussion...`);
-                await github.rest.issues.createComment({
+                await github.rest.discussions.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  issue_number: discussion.number,
+                  discussion_number: discussion.number,
                   body: `**Label issue detected for the category "${category}".**\n` +
                         `Please use one of the allowed labels:\n` +
                         `- For ServiceNow: "Incident", "CHG"\n` +
@@ -53,10 +53,10 @@ jobs:
 
               if (!hasValidLabel) {
                 console.log(`Invalid labels for category "${category}". Adding a comment to the discussion...`);
-                await github.rest.issues.createComment({
+                await github.rest.discussions.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  issue_number: discussion.number,
+                  discussion_number: discussion.number,
                   body: `**Invalid label issue detected for the category "${category}".**\n` +
                         `Allowed labels are: ${requiredLabels.join(', ')}.\n` +
                         `Please update the labels accordingly.`
@@ -65,10 +65,10 @@ jobs:
               }
             } else {
               console.log(`Invalid category "${category}". Adding a comment to the discussion...`);
-              await github.rest.issues.createComment({
+              await github.rest.discussions.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: discussion.number,
+                discussion_number: discussion.number,
                 body: `**Invalid category detected.**\n` +
                       `Please select a valid category.`
               });

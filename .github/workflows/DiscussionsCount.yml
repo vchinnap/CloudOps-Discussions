@@ -1,32 +1,40 @@
-import requests
-import json
+name: Get Discussions Count by Label
 
-# Fetch discussions from the GitHub repository
-url = 'https://api.github.com/repos/vchinnap/CloudOps-Discussions/discussions'
-headers = {'Authorization': 'Bearer YOUR_ACCESS_TOKEN', 'Accept': 'application/vnd.github.v3+json'}
-response = requests.get(url, headers=headers)
+on:
+  workflow_dispatch:
 
-# Count discussions by label
-count_by_label = {}
-if response.status_code == 200:
-    discussions = response.json()
-    for discussion in discussions:
-        if not discussion['labels']:
-            count_by_label['No Label'] = count_by_label.get('No Label', 0) + 1
-        else:
-            for label in discussion['labels']:
-                label_name = label['name']
-                count_by_label[label_name] = count_by_label.get(label_name, 0) + 1
-else:
-    print(f"Failed to fetch discussions. Status code: {response.status_code}")
+jobs:
+  get-discussions-count-by-label:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-# Store the counted discussions by label into a JSON file
-with open('discussions_by_label.json', 'w') as f:
-    json.dump(count_by_label, f, indent=2)
+    - name: Fetch Discussions Count by Label
+      id: get_count_by_label
+      run: |
+        curl -s \
+          -H "Authorization: Bearer ${{ secrets.G_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/${{ github.repository }}/discussions" \
+          | jq -c 'reduce .[] as $d ({}; 
+                if ($d.labels | length) == 0 then
+                  .["No Label"] += 1
+                else
+                  ($d.labels[] | .name) as $label | 
+                  .[$label] += 1
+                end)' > discussions_by_label.json
 
-# Display the contents of discussions_by_label.json
-with open('discussions_by_label.json', 'r') as f:
-    discussions_by_label = json.load(f)
+    - name: Display Discussions Count by Label
+      run: |
+        cat discussions_by_label.json
 
-print("Discussions count by label:")
-print(json.dumps(discussions_by_label, indent=2))
+    - name: Set Discussions Count by Label as Output
+      id: set_output
+      run: |
+        discussions_by_label=$(cat discussions_by_label.json)
+        echo "discussions_by_label=$discussions_by_label" >> $GITHUB_OUTPUT
+
+    - name: Print Discussions Count by Label in Workflow
+      run: |
+        echo "The count of discussions by label is: ${{ steps.set_output.outputs.discussions_by_label }}"

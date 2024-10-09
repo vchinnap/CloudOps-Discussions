@@ -54,14 +54,13 @@ jobs:
             - For Jira: "Bug", "Task", "Story"
             - **No discussion should be created without at least one label.**
 
-      - name: Close discussion if invalid or empty labels
+      - name: Lock discussion if invalid or empty labels
         if: failure()
         uses: actions/github-script@v6
         with:
           script: |
-            await github.rest.issues.update({
+            await github.rest.discussions.lock({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.payload.discussion.number,
-              state: 'closed'
+              discussion_number: context.payload.discussion.number
             });

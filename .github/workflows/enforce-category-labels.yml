@@ -1,75 +1,40 @@
-name: Enforce Category-Specific and Non-Empty Labels
+name: Count Discussions by Category
 
 on:
-  discussion:
-    types: [created, edited]
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  enforce_category_labels:
+  count_discussions_by_category:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Validate category and labels
+      - name: Get discussions count by category
         uses: actions/github-script@v6
         with:
           script: |
-            const { discussion } = context.payload;
+            // Fetch all discussions in the repository
+            const allDiscussions = await github.rest.discussions.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all',  // Fetch both open and closed discussions
+              per_page: 100  // Adjust this value if you have more discussions
+            });
 
-            // Extract category and labels from the payload
-            const category = discussion.category?.name;
-            const labels = discussion.labels || [];
+            // Initialize an empty object to store category counts
+            const categoryCounts = {};
 
-            console.log(`Category: ${category}`);
-            console.log(`Labels: ${labels.length > 0 ? labels.map(label => label.name) : 'No labels applied'}`);
-
-            // Define allowed labels for each category
-            const allowedLabels = {
-              'ServiceNow': ['incident', 'chg'],  // Case-sensitive allowed labels for ServiceNow
-              'JIRA': ['bug', 'task', 'story']
-            };
-
-            // Check if the category is one we're validating
-            if (allowedLabels[category]) {
-              const requiredLabels = allowedLabels[category];
-
-              // If there are no labels, add a comment requesting labels
-              if (labels.length === 0) {
-                console.log(`No labels found for category "${category}". Adding a comment to the discussion...`);
-                await github.rest.discussions.comments.create({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  discussion_number: discussion.number,
-                  body: `**Label issue detected for the category "${category}".**\n` +
-                        `Please use one of the allowed labels:\n` +
-                        `- For ServiceNow: "Incident", "CHG"\n` +
-                        `- For JIRA: "Bug", "Task", "Story"\n` +
-                        `- **No discussion should be created without at least one valid label.**`
-                });
-                return;
+            // Loop through discussions and count by category
+            allDiscussions.data.forEach(discussion => {
+              const category = discussion.category.name;
+              if (categoryCounts[category]) {
+                categoryCounts[category] += 1;
+              } else {
+                categoryCounts[category] = 1;
               }
+            });
 
-              // Validate the labels
-              const hasValidLabel = labels.some(label => requiredLabels.includes(label.name.toLowerCase()));
+            // Log the category counts in JSON format
+            console.log(JSON.stringify(categoryCounts, null, 2));
 
-              if (!hasValidLabel) {
-                console.log(`Invalid labels for category "${category}". Adding a comment to the discussion...`);
-                await github.rest.discussions.comments.create({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  discussion_number: discussion.number,
-                  body: `**Invalid label issue detected for the category "${category}".**\n` +
-                        `Allowed labels are: ${requiredLabels.join(', ')}.\n` +
-                        `Please update the labels accordingly.`
-                });
-                return;
-              }
-            } else {
-              console.log(`Invalid category "${category}". Adding a comment to the discussion...`);
-              await github.rest.discussions.comments.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                discussion_number: discussion.number,
-                body: `**Invalid category detected.**\n` +
-                      `Please select a valid category.`
-              });
-            }
+            // Optionally, display the data in table format
+            console.table(categoryCounts);

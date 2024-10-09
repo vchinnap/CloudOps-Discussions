@@ -22,7 +22,7 @@ jobs:
 
       - name: Count discussions
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          G_TOKEN: ${{ secrets.G_TOKEN }}
         run: |
           node -e "
           const runGraphQLQuery = async () => {
@@ -48,7 +48,7 @@ jobs:
                 query,
                 variables,
                 headers: {
-                  authorization: \`token \${process.env.GITHUB_TOKEN}\`,
+                  authorization: \`token \${process.env.G_TOKEN}\`,
                 },
               });
           

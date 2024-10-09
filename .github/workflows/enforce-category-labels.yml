@@ -12,28 +12,22 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            // Fetch all issues from the repository (discussions are treated like issues)
-            const allIssues = await github.rest.issues.listForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'all',  // Fetch both open and closed issues (discussions)
-              per_page: 100  // Adjust as needed
+            // Fetch discussions for the repository using discussions API
+            const allDiscussions = await github.paginate(github.rest.teams.listDiscussionsInOrg, {
+              org: context.repo.owner,
+              team_slug: context.repo.repo, // Assuming discussions are in this repository
             });
 
             // Initialize an empty object to store category counts
             const categoryCounts = {};
 
-            // Loop through issues and filter discussions by checking the category field
-            allIssues.data.forEach(issue => {
-              if (issue.pull_request) return;  // Skip pull requests
-
-              if (issue.discussion_category) {  // Only discussions have a category
-                const category = issue.discussion_category.name;
-                if (categoryCounts[category]) {
-                  categoryCounts[category] += 1;
-                } else {
-                  categoryCounts[category] = 1;
-                }
+            // Loop through discussions and count by category
+            allDiscussions.forEach(discussion => {
+              const category = discussion.category.name;
+              if (categoryCounts[category]) {
+                categoryCounts[category] += 1;
+              } else {
+                categoryCounts[category] = 1;
               }
             });
 

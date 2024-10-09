@@ -63,4 +63,5 @@ jobs:
 
     - name: Print Discussions Count by Category in Workflow
       run: |
-        echo "The count of discussions by category is: ${{ steps.set_output.outputs.discussions_by_category }}"
+        echo 'The count of discussions by category is:'
+        echo '${{ steps.set_output.outputs.discussions_by_category }}' | jq '.'

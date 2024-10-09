@@ -18,8 +18,10 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/${{ github.repository }}/discussions \
           | jq 'reduce .[] as $d ({}; 
-                ($d.labels[]?.name // "No Label") as $label | 
-                .[$label] += 1)' > discussions_by_label.json
+                if ($d.labels | length) == 0
+                then .["No Label"] += 1
+                else ($d.labels[] | .name) as $label | .[$label] += 1 // 0
+                end)' > discussions_by_label.json
 
     - name: Display Discussions Count by Label
       run: |

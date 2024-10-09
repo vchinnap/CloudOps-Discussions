@@ -12,10 +12,11 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            // Fetch discussions for the repository using discussions API
-            const allDiscussions = await github.paginate(github.rest.teams.listDiscussionsInOrg, {
-              org: context.repo.owner,
-              team_slug: context.repo.repo, // Assuming discussions are in this repository
+            // Fetch discussions for the repository using the repository discussions API
+            const allDiscussions = await github.paginate(github.rest.discussions.list, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100  // Adjust as needed for larger repositories
             });
 
             // Initialize an empty object to store category counts

@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check if discussion payload exists
-        id: check_payload
+      - name: Check labels based on category
+        id: check_labels
         uses: actions/github-script@v6
         with:
           script: |
@@ -23,20 +23,20 @@ jobs:
             }
 
             const category = discussion.category?.name;
-            const labels = discussion.labels?.map(label => label.name.toLowerCase());
+            const labels = discussion.labels?.map(label => label.name.toLowerCase()) || [];
 
             // Add logging to check the payload values
             console.log(`Category: ${category}`);
             console.log(`Labels: ${labels}`);
 
-            if (!category || !labels) {
+            if (!category || !labels.length) {
               core.setFailed('Category or labels not found in the discussion payload.');
               return;
             }
 
             // Define allowed labels for each category under "Tickets" section
             const allowedLabels = {
-              'ServiceNow': ['Incident', 'CHG'],
+              'ServiceNow': ['incident', 'chg'],  // Case-sensitive labels
               'JIRA': ['bug', 'task', 'story']
             };
 
@@ -56,14 +56,19 @@ jobs:
 
       - name: Comment on discussion if invalid or empty labels
         if: failure()
-        uses: peter-evans/create-or-update-comment@v2
+        uses: actions/github-script@v6
         with:
-          token: ${{ secrets.G_TOKEN }}
-          repository: ${{ github.repository }}
-          issue-number: ${{ github.event.discussion.number }}
-          body: |
-            **Label issue detected for the category "${{ github.event.discussion.category.name }}".**
-            Please use one of the allowed labels based on the discussion category:
-            - For ServiceNow: "Incident", "Change Ticket"
-            - For JIRA: "Bug", "Task", "Story"
-            - **No discussion should be created without at least one valid label.**
+          script: |
+            const { discussion } = context.payload;
+
+            // Post a comment on the discussion
+            await github.rest.teams.createDiscussionCommentInOrg({
+              org: context.repo.owner,
+              team_slug: context.repo.repo,
+              discussion_number: discussion.number,
+              body: `**Label issue detected for the category "${discussion.category.name}".**\n` +
+                    `Please use one of the allowed labels based on the discussion category:\n` +
+                    `- For ServiceNow: "Incident", "CHG"\n` +
+                    `- For JIRA: "Bug", "Task", "Story"\n` +
+                    `- **No discussion should be created without at least one valid label.**`
+            });

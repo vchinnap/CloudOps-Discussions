@@ -1,16 +1,85 @@
-name: Print Discussion Payload for Debugging
+name: Enforce Category-Specific and Non-Empty Labels
 
 on:
   discussion:
     types: [created, edited]
 
 jobs:
-  print_discussion_payload:
+  enforce_category_labels:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print entire discussion payload
+      - name: Validate category and labels
         uses: actions/github-script@v6
         with:
           script: |
-            console.log('Full discussion payload:', JSON.stringify(context.payload, null, 2));
+            const { discussion } = context.payload;
+
+            // Extract category and labels from the payload
+            const category = discussion.category?.name;
+            const labels = discussion.labels || [];
+
+            console.log(`Category: ${category}`);
+            console.log(`Labels: ${labels.length > 0 ? labels.map(label => label.name) : 'No labels applied'}`);
+
+            // Define allowed labels for each category
+            const allowedLabels = {
+              'ServiceNow': ['incident', 'chg'],  // Case-sensitive allowed labels for ServiceNow
+              'JIRA': ['bug', 'task', 'story']
+            };
+
+            // Check if the category is one we're validating
+            if (allowedLabels[category]) {
+              const requiredLabels = allowedLabels[category];
+
+              // If there are no labels, it's an error, and we need to delete the discussion
+              if (labels.length === 0) {
+                console.log(`No labels found for category "${category}". Deleting discussion...`);
+                await github.rest.discussions.delete({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  discussion_number: discussion.number
+                });
+                return;
+              }
+
+              // Validate the labels
+              const hasValidLabel = labels.some(label => requiredLabels.includes(label.name.toLowerCase()));
+
+              if (!hasValidLabel) {
+                console.log(`Invalid labels for category "${category}". Deleting discussion...`);
+                await github.rest.discussions.delete({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  discussion_number: discussion.number
+                });
+                return;
+              }
+            } else {
+              console.log(`Invalid category "${category}". Deleting discussion...`);
+              await github.rest.discussions.delete({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                discussion_number: discussion.number
+              });
+            }
+
+
+
+
+#name: Print Discussion Payload for Debugging
+
+#on:
+#  discussion:
+#    types: [created, edited]
+
+#jobs:
+#  print_discussion_payload:
+#    runs-on: ubuntu-latest
+
+#    steps:
+#      - name: Print entire discussion payload
+#        uses: actions/github-script@v6
+#        with:
+#          script: |
+#            console.log('Full discussion payload:', JSON.stringify(context.payload, null, 2));

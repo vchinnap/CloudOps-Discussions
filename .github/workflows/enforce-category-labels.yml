@@ -1,0 +1,67 @@
+name: Enforce Category-Specific and Non-Empty Labels
+
+on:
+  discussion:
+    types: [created, edited]
+
+jobs:
+  enforce_category_labels:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check labels based on category
+        id: check_labels
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { discussion } = context.payload;
+            const category = discussion.category.name;
+            const labels = discussion.labels.map(label => label.name.toLowerCase());
+
+            // Define allowed labels for each category
+            const allowedLabels = {
+              'servicenow': ['incident', 'change ticket'],
+              'jira': ['bug', 'task', 'story']
+            };
+
+            // Check if any labels are present
+            if (labels.length === 0) {
+              core.setFailed(`No labels found for this discussion. You must apply a valid label.`);
+            } else if (allowedLabels[category.toLowerCase()]) {
+              const requiredLabels = allowedLabels[category.toLowerCase()];
+
+              // Check if the discussion labels include any of the allowed labels
+              const hasValidLabel = labels.some(label => requiredLabels.includes(label));
+
+              if (!hasValidLabel) {
+                core.setFailed(`Invalid labels for category "${category}". Allowed labels are: ${requiredLabels.join(', ')}`);
+              }
+            } else {
+              core.setFailed(`Invalid category "${category}". This category is not configured with allowed labels.`);
+            }
+
+      - name: Comment on discussion if invalid or empty labels
+        if: failure()
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          issue-number: ${{ github.event.discussion.number }}
+          body: |
+            **Label issue detected for the category "${{ github.event.discussion.category.name }}".**
+            Please use one of the allowed labels based on the discussion category:
+            - For ServiceNow: "Incident", "Change Ticket"
+            - For Jira: "Bug", "Task", "Story"
+            - **No discussion should be created without at least one label.**
+
+      - name: Close discussion if invalid or empty labels
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.discussion.number,
+              state: 'closed'
+            });

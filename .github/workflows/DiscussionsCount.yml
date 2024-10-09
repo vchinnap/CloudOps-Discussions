@@ -16,13 +16,13 @@ jobs:
         curl -s \
           -H "Authorization: Bearer ${{ secrets.G_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{ github.repository }}/discussions \
+          "https://api.github.com/repos/${{ github.repository }}/discussions" \
           | jq 'reduce .[] as $d ({}; 
                 if ($d.labels | length) == 0 then
-                  .["No Label"] += 1 // 0
+                  .["No Label"] += 1
                 else
                   ($d.labels[] | .name) as $label | 
-                  .[$label] += 1 // 0
+                  .[$label] += 1
                 end)' > discussions_by_label.json
 
     - name: Display Discussions Count by Label
@@ -33,7 +33,7 @@ jobs:
       id: set_output
       run: |
         discussions_by_label=$(cat discussions_by_label.json)
-        echo "::set-output name=discussions_by_label::$discussions_by_label"
+        echo "discussions_by_label=$discussions_by_label" >> $GITHUB_OUTPUT
 
     - name: Print Discussions Count by Label in Workflow
       run: |

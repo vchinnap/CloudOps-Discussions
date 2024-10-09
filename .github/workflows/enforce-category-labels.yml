@@ -1,35 +1,39 @@
-name: Get Discussions Count
+name: Get Discussions Count by Label
 
 on:
   workflow_dispatch:
 
 jobs:
-  get-discussions-count:
+  get-discussions-count-by-label:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Fetch Discussions Count
-      id: get_count
+    - name: Fetch Discussions Count by Label
+      id: get_count_by_label
       run: |
         curl -s \
           -H "Authorization: Bearer ${{ secrets.G_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/${{ github.repository }}/discussions \
-          | jq '. | length' > discussions_count.txt
+          | jq 'reduce .[] as $d ({}; 
+                if $d.labels == [] 
+                then .["No Label"] += 1
+                else ($d.labels[]?.name // "No Label") as $label | 
+                     .[$label] += 1 // 0
+                end)' > discussions_by_label.json
 
-    - name: Display Discussions Count
+    - name: Display Discussions Count by Label
       run: |
-        count=$(cat discussions_count.txt)
-        echo "Total Discussions Count: $count"
+        cat discussions_by_label.json
 
-    - name: Set Discussions Count as Output
+    - name: Set Discussions Count by Label as Output
       id: set_output
       run: |
-        count=$(cat discussions_count.txt)
-        echo "::set-output name=discussions_count::$count"
+        discussions_by_label=$(cat discussions_by_label.json)
+        echo "::set-output name=discussions_by_label::$discussions_by_label"
 
-    - name: Print Discussions Count in Workflow
+    - name: Print Discussions Count by Label in Workflow
       run: |
-        echo "The total number of discussions is ${{ steps.set_output.outputs.discussions_count }}"
+        echo "The count of discussions by label is: ${{ steps.set_output.outputs.discussions_by_label }}"

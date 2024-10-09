@@ -36,7 +36,7 @@ jobs:
 
             // Define allowed labels for each category under "Tickets" section
             const allowedLabels = {
-              'ServiceNow': ['incident', 'chg'],  // Case-sensitive labels
+              'ServiceNow': ['Incident', 'CHG'],  // Case-sensitive labels
               'JIRA': ['bug', 'task', 'story']
             };
 

@@ -1,67 +1,62 @@
-name: Count Discussions
+name: Count Discussions 
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  count-discussions:
+  count_discussions:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+      
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'  # Switch to node 18 or later, as required by @octokit/graphql
 
-      - name: Install dependencies
-        run: npm install @octokit/graphql node-fetch
+      - name: Install node-fetch
+        run: npm install node-fetch@2
 
-      - name: Count discussions
-        env:
-          G_TOKEN: ${{ secrets.G_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
+      - name: Run GraphQL query
         run: |
           node -e "
+          const fetch = require('node-fetch');
+          const { graphql } = require('@octokit/graphql');
+          
           const runGraphQLQuery = async () => {
-            const { graphql } = await import('@octokit/graphql');
-            const fetch = (await import('node-fetch')).default;
-          
-            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-            console.log('Owner:', owner);
-            console.log('Repo:', repo);
-          
-            const query = \`
-              query(\$owner: String!, \$repo: String!) {
-                repository(owner: \$owner, name: \$repo) {
+            const query = `
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
                   discussions {
                     totalCount
                   }
                 }
-              }
-            \`;
+              }`;
+          
+            const variables = {
+              owner: process.env.GITHUB_REPOSITORY.split('/')[0],
+              repo: process.env.GITHUB_REPOSITORY.split('/')[1]
+            };
           
             try {
               const result = await graphql({
                 query,
-                variables: { owner, repo },
+                variables,
                 headers: {
-                  authorization: \`token \${process.env.G_TOKEN}\`,
+                  authorization: \`token \${process.env.GITHUB_TOKEN}\`,
                 },
-                request: {
-                  fetch: fetch
-                }
+                request: { fetch },  // Attach fetch implementation
               });
           
               console.log(\`Total discussions: \${result.repository.discussions.totalCount}\`);
             } catch (error) {
               console.error('Error:', error);
-              if (error.errors) {
-                error.errors.forEach(e => console.error('GraphQL Error:', e.message));
-              }
             }
           };
           
           runGraphQLQuery();
           "
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token to authenticate

@@ -110,62 +110,41 @@ jobs:
             # Prepare top contributors
             top_contributors = sorted(contributors.items(), key=lambda x: x[1], reverse=True)[:5]
 
-            # Create the updated content for index.md
-            new_content = f"## Discussion Stats\n\n"
-            new_content += f"- **Total Discussions**: {len(discussions)}\n"
-            new_content += f"- **Open Discussions**: {open_count}\n"
-            new_content += f"- **Closed Discussions**: {closed_count}\n\n"
+            # Create the additional content to append at the end of index.md
+            additional_content = f"\n## Additional Discussion Stats\n\n"
+            additional_content += f"- **Total Discussions**: {len(discussions)}\n"
+            additional_content += f"- **Open Discussions**: {open_count}\n"
+            additional_content += f"- **Closed Discussions**: {closed_count}\n\n"
 
             # Add recent discussions
-            new_content += "## Recent Discussions\n\n"
+            additional_content += "### Recent Discussions\n\n"
             recent_discussions = discussions[:5]
             for disc in recent_discussions:
-                new_content += f"- [{disc['title']}]({disc['html_url']}) - Created on {disc['created_at']}\n"
-
-            # Add category and label counts
-            new_content += "\n## Discussions by Category and Label\n"
-            new_content += "| Category    | Count | Label  | Count |\n"
-            new_content += "|-------------|-------|--------|-------|\n"
-
-            categories_list = list(count_by_category.items())
-            labels_list = list(count_by_label.items())
-            max_rows = max(len(categories_list), len(labels_list))
-
-            for i in range(max_rows):
-                category_row = categories_list[i] if i < len(categories_list) else ("", "")
-                label_row = labels_list[i] if i < len(labels_list) else ("", "")
-                new_content += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"
-
-            if no_label_count > 0:
-                new_content += f"|  |  | No Label | {no_label_count} |\n"
+                additional_content += f"- [{disc['title']}]({disc['html_url']}) - Created on {disc['created_at']}\n"
 
             # Add top contributors
-            new_content += "\n## Top Contributors\n\n"
-            new_content += "| User         | Discussions Created |\n"
-            new_content += "|--------------|---------------------|\n"
+            additional_content += "\n### Top Contributors\n\n"
+            additional_content += "| User         | Discussions Created |\n"
+            additional_content += "|--------------|---------------------|\n"
             for user, count in top_contributors:
-                new_content += f"| @{user} | {count} |\n"
+                additional_content += f"| @{user} | {count} |\n"
 
             # Add most engaging discussions
-            new_content += "\n## Most Engaging Discussions\n\n"
+            additional_content += "\n### Most Engaging Discussions\n\n"
             for title, comments, url in most_commented[:5]:
-                new_content += f"- [{title}]({url}) - {comments} comments\n"
+                additional_content += f"- [{title}]({url}) - {comments} comments\n"
 
             # Add unanswered discussions
-            new_content += "\n## Unanswered Discussions\n\n"
+            additional_content += "\n### Unanswered Discussions\n\n"
             for disc in unanswered_discussions[:5]:
-                new_content += f"- [{disc['title']}]({disc['html_url']}) - Created on {disc['created_at']}\n"
+                additional_content += f"- [{disc['title']}]({disc['html_url']}) - Created on {disc['created_at']}\n"
 
             # Read the existing content of index.md
             with open('index.md', 'r') as f:
                 content = f.read()
 
-            # Define the pattern to match the existing sections and replace it
-            stats_pattern = r"(## Discussion Stats\n)(.*\n)+"
-            if re.search(stats_pattern, content):
-                updated_content = re.sub(stats_pattern, new_content, content)
-            else:
-                updated_content = new_content + content
+            # Append the new content at the end of index.md
+            updated_content = content + additional_content
 
             # Write the updated content back to index.md
             with open('index.md', 'w') as f:

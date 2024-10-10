@@ -1,4 +1,4 @@
-name: Get Discussions Count by Category Index
+name: Get Discussions Count by Category Index and lbel
 
 on:
   workflow_dispatch:

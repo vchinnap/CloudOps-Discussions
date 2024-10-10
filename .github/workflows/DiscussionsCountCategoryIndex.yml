@@ -1,4 +1,4 @@
-name: Get Discussions Count by Category
+name: Get Discussions Count by Category Index
 
 on:
   schedule:

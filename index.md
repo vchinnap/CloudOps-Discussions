@@ -5,6 +5,7 @@
 ### Click on [Town Square](https://github.com/vchinnap/town-square/discussions) for community engagement.
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 18
@@ -51,10 +52,3 @@
 - [Replicate Stack Overflow with Github Discussions](https://github.com/vchinnap/CloudOps-Discussions/discussions/15) - Created on 2024-10-08T16:35:44Z
 - [Cloud Operations Daily stand up meetings 09122023](https://github.com/vchinnap/CloudOps-Discussions/discussions/18) - Created on 2024-10-09T15:56:01Z
 - [S3 down](https://github.com/vchinnap/CloudOps-Discussions/discussions/23) - Created on 2024-10-09T19:04:15Z
-
-> **Note**: This project is maintained by the  team to streamline operations.
-
-## Features
-- **Centralized Documentation**: Keep all your cloud operations documentation in one place.
-- **Easy Navigation**: Quickly find the information you need with a searchable interface.
-- **Integration with GitHub**: Link directly to issues, discussions, and pull requests..

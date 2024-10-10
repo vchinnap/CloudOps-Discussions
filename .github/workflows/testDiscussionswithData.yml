@@ -78,7 +78,7 @@ jobs:
                     no_label_count += 1
 
             # Create a combined Markdown table
-            markdown_content = "## Insights by Cloud Operations\n\n"
+            markdown_content = "# Discussions Count by Category and Label\n\n"
             markdown_content += "| Category    | Category Count | Label  | Label Count |\n"
             markdown_content += "|-------------|----------------|--------|-------------|\n"
 

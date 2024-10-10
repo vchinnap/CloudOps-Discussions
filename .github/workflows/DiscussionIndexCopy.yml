@@ -83,15 +83,15 @@ jobs:
             markdown_content += "| Category    | Category Count | Label  | Label Count |\n"
             markdown_content += "|-------------|----------------|--------|-------------|\n"
 
-            # Get the maximum number of rows needed
-            max_rows = max(len(count_by_category), len(count_by_label), no_label_count)
-
             # Prepare lists for categories and labels
             categories_list = list(count_by_category.items())
             labels_list = list(count_by_label.items())
 
+            # Get the maximum number of rows needed for the table
+            max_rows = max(len(categories_list), len(labels_list))
+
             for i in range(max_rows):
-                category_row = categories_list[i] if i < len(categories_list) else ("No Category", no_label_count)
+                category_row = categories_list[i] if i < len(categories_list) else ("", "")
                 label_row = labels_list[i] if i < len(labels_list) else ("No Label", no_label_count)
                 
                 markdown_content += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"

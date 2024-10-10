@@ -2,7 +2,6 @@ name: Get Discussions Count by Category Index
 
 on:
   workflow_dispatch:
-  
 
 permissions:
   contents: write
@@ -41,11 +40,16 @@ jobs:
         response = requests.get(url, headers=headers)
 
         count_by_category = {}
+        no_label_count = 0
         if response.status_code == 200:
             discussions = response.json()
             for discussion in discussions:
-                category_name = discussion['category']['name']
-                count_by_category[category_name] = count_by_category.get(category_name, 0) + 1
+                category = discussion.get('category')
+                if category and 'name' in category:
+                    category_name = category['name']
+                    count_by_category[category_name] = count_by_category.get(category_name, 0) + 1
+                else:
+                    no_label_count += 1
 
             # Create Markdown content
             markdown_content = "# Discussions Count by Category\n\n"
@@ -53,6 +57,7 @@ jobs:
             markdown_content += "|----------|-------|\n"
             for category, count in count_by_category.items():
                 markdown_content += f"| {category} | {count} |\n"
+            markdown_content += f"| No Label | {no_label_count} |\n"
 
             # Write to index.md
             with open('index.md', 'w') as f:

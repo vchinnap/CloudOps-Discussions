@@ -1,4 +1,4 @@
-name: Get Discussions Count by Category and Label Index
+name: test
 
 on:
   workflow_dispatch:
@@ -80,8 +80,8 @@ jobs:
 
             # Create a combined Markdown table
             markdown_content = "# Discussions Count by Category and Label\n\n"
-            markdown_content += "| Category | Count | Label | Count |\n"
-            markdown_content += "|----------|-------|-------|-------|\n"
+            markdown_content += "| Category    | Category Count | Label  | Label Count |\n"
+            markdown_content += "|-------------|----------------|--------|-------------|\n"
 
             # Get the maximum number of rows needed
             max_rows = max(len(count_by_category), len(count_by_label), no_label_count)
@@ -91,14 +91,10 @@ jobs:
             labels_list = list(count_by_label.items())
 
             for i in range(max_rows):
-                category_row = categories_list[i] if i < len(categories_list) else ("", "")
-                label_row = labels_list[i] if i < len(labels_list) else ("", "")
+                category_row = categories_list[i] if i < len(categories_list) else ("No Category", no_label_count)
+                label_row = labels_list[i] if i < len(labels_list) else ("No Label", no_label_count)
                 
                 markdown_content += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"
-
-            # Add "No Label" row if necessary
-            if no_label_count > 0 or max_rows == 0:
-                markdown_content += f"| No Category | {no_label_count} | No Label | {no_label_count} |\n"
 
             with open('index.md', 'w') as f:
                 f.write(markdown_content)

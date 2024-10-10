@@ -31,6 +31,7 @@ jobs:
         import requests
         import os
         import sys
+        import re
 
         def get_all_discussions(repo):
             url = f"https://api.github.com/repos/{repo}/discussions"
@@ -77,10 +78,9 @@ jobs:
                 else:
                     no_label_count += 1
 
-            # Create a combined Markdown table
-            markdown_content = "# Discussions Count by Category and Label\n\n"
-            markdown_content += "| Category    | Category Count | Label  | Label Count |\n"
-            markdown_content += "|-------------|----------------|--------|-------------|\n"
+            # Create a new Markdown table
+            new_table = "| Category    | Category Count | Label  | Label Count |\n"
+            new_table += "|-------------|----------------|--------|-------------|\n"
 
             # Prepare lists for categories and labels
             categories_list = list(count_by_category.items())
@@ -93,18 +93,18 @@ jobs:
                 category_row = categories_list[i] if i < len(categories_list) else ("", "")
                 label_row = labels_list[i] if i < len(labels_list) else ("", "")
                 
-                markdown_content += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"
+                new_table += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"
 
             # Add a row for "No Label" if there are discussions without labels
             if no_label_count > 0:
-                markdown_content += f"|  |  | No Label | {no_label_count} |\n"
+                new_table += f"|  |  | No Label | {no_label_count} |\n"
 
             # Read the existing content of index.md
             with open('index.md', 'r') as f:
-                existing_lines = f.readlines()
+                content = f.read()
 
-            # Insert new content after the 6th line
-            updated_content = ''.join(existing_lines[:6]) + markdown_content + ''.join(existing_lines[6:])
+            # Replace the existing table (if present) with the updated table
+            updated_content = re.sub(r"(\| Category.*\|\n)(\|.*\|\n)*", new_table, content)
 
             with open('index.md', 'w') as f:
                 f.write(updated_content)

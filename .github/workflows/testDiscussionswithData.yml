@@ -30,8 +30,8 @@ jobs:
         python - <<EOF
         import requests
         import os
-        import sys
         import re
+        import sys
 
         def get_all_discussions(repo):
             url = f"https://api.github.com/repos/{repo}/discussions"
@@ -78,7 +78,7 @@ jobs:
                 else:
                     no_label_count += 1
 
-            # Create a new Markdown table
+            # Create the updated table with current data
             new_table = "| Category    | Category Count | Label  | Label Count |\n"
             new_table += "|-------------|----------------|--------|-------------|\n"
 
@@ -103,9 +103,18 @@ jobs:
             with open('index.md', 'r') as f:
                 content = f.read()
 
-            # Replace the existing table (if present) with the updated table
-            updated_content = re.sub(r"(\| Category.*\|\n)(\|.*\|\n)*", new_table, content)
+            # Define the pattern to match the existing table and replace it with the new one
+            table_pattern = r"(\| Category.*\|\n)(\|.*\|\n)+"
 
+            # Replace the existing table in the markdown content
+            if re.search(table_pattern, content):
+                updated_content = re.sub(table_pattern, new_table, content)
+            else:
+                # If no existing table is found, append the new table after the 6th line
+                lines = content.splitlines()
+                updated_content = '\n'.join(lines[:6]) + '\n' + new_table + '\n'.join(lines[6:])
+
+            # Write the updated content back to the index.md file
             with open('index.md', 'w') as f:
                 f.write(updated_content)
 

@@ -1,4 +1,4 @@
-name: Get Discussions Count by Category and Label Index
+name: Test with Data
 
 on:
   workflow_dispatch:

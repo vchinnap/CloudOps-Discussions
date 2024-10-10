@@ -2,8 +2,8 @@ name: Get Discussions Count by Category Index
 
 on:
   schedule:
-    - cron: "*/2 * * * *"  # Runs every minute
-  workflow_dispatch:
+    - cron: "*/1 * * * *"  # Runs every minute
+  
 
 permissions:
   contents: write

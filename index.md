@@ -1,28 +1,17 @@
-# Discussions Count by Category
+# Discussions Count by Category and Label
 
-| Category | Count |
-|----------|-------|
-| ServiceNow | 5 |
-| JIRA | 5 |
-| Teams | 5 |
-| Q&A | 1 |
-| Ideas | 1 |
-| Channels | 1 |
-
-# Discussions Count by Label
-
-| Label | Count |
-|-------|-------|
-| CHG | 1 |
-| S3 | 2 |
-| AWS | 3 |
-| EC2 | 3 |
-| Incident | 3 |
-| bug | 2 |
-| Chat | 2 |
-| Announcement | 1 |
-| Cloud Operations | 1 |
-| Initiatives | 1 |
-| Agile | 1 |
-| Task | 4 |
-| No Label | 3 |
+| Category | Count | Label | Count |
+|----------|-------|-------|-------|
+| ServiceNow | 5 | CHG | 1 |
+| JIRA | 5 | S3 | 2 |
+| Teams | 5 | AWS | 3 |
+| Q&A | 1 | EC2 | 3 |
+| Ideas | 1 | Incident | 3 |
+| Channels | 1 | bug | 2 |
+|  |  | Chat | 2 |
+|  |  | Announcement | 1 |
+|  |  | Cloud Operations | 1 |
+|  |  | Initiatives | 1 |
+|  |  | Agile | 1 |
+|  |  | Task | 4 |
+| No Category | 3 | No Label | 3 |

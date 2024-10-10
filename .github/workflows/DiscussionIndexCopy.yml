@@ -96,6 +96,10 @@ jobs:
                 
                 markdown_content += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"
 
+            # Add a row for "No Label" if not already included in the labels list
+            if no_label_count > 0 and len(labels_list) == 0:
+                markdown_content += f"|  |  | No Label | {no_label_count} |\n"
+
             with open('index.md', 'w') as f:
                 f.write(markdown_content)
 

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+
 # Discussions Count by Category and Label
 
 | Category    | Category Count | Label  | Label Count |

@@ -78,9 +78,9 @@ jobs:
                     no_label_count += 1
 
             # Create a combined Markdown table
-            markdown_table = "\n\n## Discussions Count by Category and Label\n\n"
-            markdown_table += "| Category    | Category Count | Label  | Label Count |\n"
-            markdown_table += "|-------------|----------------|--------|-------------|\n"
+            markdown_content = "# Discussions Count by Category and Label\n\n"
+            markdown_content += "| Category    | Category Count | Label  | Label Count |\n"
+            markdown_content += "|-------------|----------------|--------|-------------|\n"
 
             # Prepare lists for categories and labels
             categories_list = list(count_by_category.items())
@@ -93,24 +93,19 @@ jobs:
                 category_row = categories_list[i] if i < len(categories_list) else ("", "")
                 label_row = labels_list[i] if i < len(labels_list) else ("", "")
                 
-                markdown_table += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"
+                markdown_content += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"
 
             # Add a row for "No Label" if there are discussions without labels
             if no_label_count > 0:
-                markdown_table += f"|  |  | No Label | {no_label_count} |\n"
+                markdown_content += f"|  |  | No Label | {no_label_count} |\n"
 
             # Read the existing content of index.md
             with open('index.md', 'r') as f:
-                content = f.read()
+                existing_lines = f.readlines()
 
-            # Insert the table after the "community engagement" line
-            insert_after = "for community engagement."
-            if insert_after in content:
-                updated_content = content.replace(insert_after, insert_after + markdown_table)
-            else:
-                updated_content = content + markdown_table  # If the line is not found, append the table at the end
+            # Insert new content after the 6th line
+            updated_content = ''.join(existing_lines[:6]) + markdown_content + ''.join(existing_lines[6:])
 
-            # Write the updated content back to index.md
             with open('index.md', 'w') as f:
                 f.write(updated_content)
 

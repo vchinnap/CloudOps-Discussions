@@ -1,4 +1,4 @@
-name: test
+name: Get Discussions Count by Category and Label Index
 
 on:
   workflow_dispatch:
@@ -29,7 +29,6 @@ jobs:
       run: |
         python - <<EOF
         import requests
-        import json
         import os
         import sys
 
@@ -92,12 +91,12 @@ jobs:
 
             for i in range(max_rows):
                 category_row = categories_list[i] if i < len(categories_list) else ("", "")
-                label_row = labels_list[i] if i < len(labels_list) else ("No Label", no_label_count)
+                label_row = labels_list[i] if i < len(labels_list) else ("", "")
                 
                 markdown_content += f"| {category_row[0]} | {category_row[1]} | {label_row[0]} | {label_row[1]} |\n"
 
-            # Add a row for "No Label" if not already included in the labels list
-            if no_label_count > 0 and len(labels_list) == 0:
+            # Add a row for "No Label" if there are discussions without labels
+            if no_label_count > 0:
                 markdown_content += f"|  |  | No Label | {no_label_count} |\n"
 
             with open('index.md', 'w') as f:

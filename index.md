@@ -2,7 +2,7 @@
 
 | Category | Count |
 |----------|-------|
-| ServiceNow | 3 |
+| ServiceNow | 5 |
 | JIRA | 5 |
 | Teams | 5 |
 | Q&A | 1 |

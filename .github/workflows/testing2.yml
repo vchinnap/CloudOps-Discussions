@@ -1,4 +1,4 @@
-name: testing2
+name: testing
 
 on:
   workflow_dispatch:
@@ -68,6 +68,7 @@ jobs:
             closed_count = 0
             contributors = defaultdict(int)
             most_commented = []
+            unanswered_discussions = []
 
             for discussion in discussions:
                 # Count open vs closed
@@ -99,6 +100,10 @@ jobs:
                 # Track most commented discussions
                 comments_count = discussion.get('comments', 0)
                 most_commented.append((discussion['title'], comments_count, discussion['html_url']))
+
+                # Track unanswered discussions (0 comments)
+                if comments_count == 0:
+                    unanswered_discussions.append(discussion)
 
             most_commented.sort(key=lambda x: x[1], reverse=True)
 
@@ -146,17 +151,25 @@ jobs:
             for title, comments, url in most_commented[:5]:
                 new_content += f"- [{title}]({url}) - {comments} comments\n"
 
+            # Add unanswered discussions
+            new_content += "\n## Unanswered Discussions\n\n"
+            for disc in unanswered_discussions[:5]:
+                new_content += f"- [{disc['title']}]({disc['html_url']}) - Created on {disc['created_at']}\n"
+
             # Read the existing content of index.md
             with open('index.md', 'r') as f:
                 content = f.read()
 
             # Define the pattern to match the existing sections and replace it
             stats_pattern = r"(## Discussion Stats\n)(.*\n)+"
-            new_content = re.sub(stats_pattern, new_content, content)
+            if re.search(stats_pattern, content):
+                updated_content = re.sub(stats_pattern, new_content, content)
+            else:
+                updated_content = new_content + content
 
             # Write the updated content back to index.md
             with open('index.md', 'w') as f:
-                f.write(new_content)
+                f.write(updated_content)
 
             print("Successfully updated index.md")
         except Exception as e:

@@ -1,0 +1,66 @@
+name: Get Discussions Count by Category Index
+
+on:
+  workflow_dispatch:
+
+jobs:
+  get-discussions-count-by-category:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Fetch Discussions Count by Category and Update Markdown
+      env:
+        GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
+      run: |
+        python - <<EOF
+        import requests
+        import json
+        import os
+
+        url = f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/discussions"
+        headers = {
+            'Authorization': f"Bearer {os.environ['GITHUB_TOKEN']}",
+            'Accept': 'application/vnd.github.v3+json'
+        }
+        response = requests.get(url, headers=headers)
+
+        count_by_category = {}
+        if response.status_code == 200:
+            discussions = response.json()
+            for discussion in discussions:
+                category_name = discussion['category']['name']
+                count_by_category[category_name] = count_by_category.get(category_name, 0) + 1
+
+            # Create Markdown content
+            markdown_content = "# Discussions Count by Category\n\n"
+            markdown_content += "| Category | Count |\n"
+            markdown_content += "|----------|-------|\n"
+            for category, count in count_by_category.items():
+                markdown_content += f"| {category} | {count} |\n"
+
+            # Write to index.md
+            with open('index.md', 'w') as f:
+                f.write(markdown_content)
+        else:
+            print(f"Failed to fetch discussions. Status code: {response.status_code}")
+        EOF
+
+    - name: Commit changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add index.md
+        git commit -m "Update discussions count by category"
+        git push

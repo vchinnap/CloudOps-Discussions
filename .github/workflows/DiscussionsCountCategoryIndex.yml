@@ -2,7 +2,7 @@ name: Get Discussions Count by Category
 
 on:
   schedule:
-    - cron: "*/1 * * * *"  # Runs every minute
+    - cron: "*/2 * * * *"  # Runs every minute
   workflow_dispatch:
 
 permissions:

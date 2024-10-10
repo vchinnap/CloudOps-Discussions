@@ -3,6 +3,9 @@ name: Get Discussions Count by Category Index
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write  # Allows writing changes to the repository
+
 jobs:
   get-discussions-count-by-category:
     runs-on: ubuntu-latest

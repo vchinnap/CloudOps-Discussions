@@ -8,9 +8,9 @@
 | Q&A | 1 | EC2 | 3 |
 | Ideas | 1 | Incident | 3 |
 | Channels | 1 | bug | 2 |
-| No Category | 3 | Chat | 2 |
-| No Category | 3 | Announcement | 1 |
-| No Category | 3 | Cloud Operations | 1 |
-| No Category | 3 | Initiatives | 1 |
-| No Category | 3 | Agile | 1 |
-| No Category | 3 | Task | 4 |
+|  |  | Chat | 2 |
+|  |  | Announcement | 1 |
+|  |  | Cloud Operations | 1 |
+|  |  | Initiatives | 1 |
+|  |  | Agile | 1 |
+|  |  | Task | 4 |

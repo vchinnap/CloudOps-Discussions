@@ -11,6 +11,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.G_TOKEN }}
           DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
-          LABEL: your-default-label
+          LABEL: ideas
         run: |
           gh discussion edit $DISCUSSION_NUMBER --add-label "$LABEL"

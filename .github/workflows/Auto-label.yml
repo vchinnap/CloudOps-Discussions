@@ -1,0 +1,35 @@
+name: Auto-label new discussions based on category
+
+on:
+  discussion:
+    types: [created]
+
+jobs:
+  label-discussion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply labels based on category
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.G_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const discussionNumber = context.payload.discussion.number;
+            const category = context.payload.discussion.category.name;
+
+            let labels = [];
+
+            if (category === "ServiceNow") {
+              labels = ["CHG", "Incident"]; // Add labels for Ideas category
+            } else if (category === "Jira") {
+              labels = ["task", "bug", "story", "jira"];  // Add labels for Question and Answer category
+            } else {
+              labels = ["General"]; // Default label if no specific category matches
+            }
+
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: discussionNumber,
+              labels
+            });

@@ -5,50 +5,70 @@ on:
     types: [created]
 
 permissions:
-  issues: write  # Grants permission to modify issues (discussions share label capabilities with issues)
+  discussions: write  # Grants permission to modify discussions
+  contents: read      # Required for reading repository contents
 
 jobs:
   label-discussion:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug - Log the discussion payload
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.G_TOKEN }}
-          script: |
-            // Log the entire payload to see the structure and details of the discussion
-            console.log(JSON.stringify(context.payload, null, 2));
-
       - name: Apply labels based on category
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.G_TOKEN }}
           script: |
-            const { owner, repo } = context.repo;
-            const discussionNumber = context.payload.discussion.number;
             const category = context.payload.discussion.category.name;
-
-            console.log(`Discussion number: ${discussionNumber}`);
-            console.log(`Category: ${category}`);
-
-            let labels = [];
+            const discussionNodeId = context.payload.discussion.node_id;
+            const labelNames = [];
 
             // Apply specific labels based on the category
             if (category === "Ideas") {
-              labels = ["Initiatives", "Ideas"];
+              labelNames.push("Initiatives", "Ideas");
             } else if (category === "Question and Answer") {
-              labels = ["Question and Answer"];
+              labelNames.push("Question and Answer");
             } else {
-              labels = ["General"]; // Apply "General" label for all other categories
+              labelNames.push("General"); // Apply "General" label for all other categories
             }
 
-            // Add the labels if there are any
-            if (labels.length > 0) {
-              console.log(`Applying labels: ${labels.join(', ')}`);
-              await github.rest.issues.addLabels({
-                owner,
-                repo,
-                issue_number: discussionNumber,
-                labels
+            // Fetch the IDs of the labels based on their names
+            const labelIds = [];
+
+            for (const labelName of labelNames) {
+              const { repository } = await github.graphql(`
+                query($owner: String!, $repo: String!, $labelName: String!) {
+                  repository(owner: $owner, name: $repo) {
+                    label(name: $labelName) {
+                      id
+                    }
+                  }
+                }
+              `, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labelName: labelName
               });
+
+              if (repository.label) {
+                labelIds.push(repository.label.id);
+              } else {
+                console.log(`Label '${labelName}' not found in the repository.`);
+              }
+            }
+
+            if (labelIds.length > 0) {
+              // Add labels to the discussion using GraphQL mutation
+              await github.graphql(`
+                mutation($labelableId: ID!, $labelIds: [ID!]!) {
+                  addLabelsToLabelable(input: {labelableId: $labelableId, labelIds: $labelIds}) {
+                    clientMutationId
+                  }
+                }
+              `, {
+                labelableId: discussionNodeId,
+                labelIds: labelIds
+              });
+
+              console.log(`Applied labels: ${labelNames.join(', ')}`);
+            } else {
+              console.log('No labels were applied.');
             }

@@ -282,10 +282,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 23
-- **Open Discussions**: 17
+- **Total Discussions**: 20
+- **Open Discussions**: 14
 - **Closed Discussions**: 6
 
 ### Discussions by Category
@@ -296,8 +297,7 @@
 | JIRA | 6 |
 | Teams | 6 |
 | Q&A | 2 |
-| Channels | 2 |
-| Ideas | 2 |
+| Channels | 1 |
 
 ### Recent Discussions
 
@@ -311,7 +311,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 23 |
+| @vchinnap | 20 |
 
 ### Most Engaging Discussions
 

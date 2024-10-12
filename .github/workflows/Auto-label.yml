@@ -23,9 +23,9 @@ jobs:
 
             // Apply specific labels based on the category
             if (category === "Ideas") {
-              labelNames.push("Initiatives", "Ideas");
-            } else if (category === "Question and Answer") {
-              labelNames.push("Question and Answer");
+              labelNames.push("Initiatives", "ideas");
+            } else if (category === "ServiceNow") {
+              labelNames.push("ServiceNow");
             } else {
               labelNames.push("General"); // Apply "General" label for all other categories
             }

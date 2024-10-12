@@ -1,32 +1,49 @@
 name: Delete Discussion
 
 on:
-  workflow_dispatch  # Trigger this workflow manually for demo purposes
+  workflow_dispatch  # This trigger allows you to manually run the workflow
 
 jobs:
   delete_discussion:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get Discussion ID
+      - name: Get Discussion ID and Delete Discussion
         env:
           GH_TOKEN: ${{ secrets.G_TOKEN }}
-          DISCUSSION_NUMBER: 72  # Replace with the number of the discussion to delete
+          DISCUSSION_NUMBER: 72  # Replace with the discussion number you want to delete
         run: |
+          echo "Fetching discussion ID for discussion #${DISCUSSION_NUMBER}"
+
           # Fetch the discussion ID using the discussion number
           DISCUSSION_ID=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -X POST \
-            -d '{"query": "query { repository(owner: \"vchinnap\", name: \"CloudOps-Discussions\") { discussion(number: $DISCUSSION_NUMBER) { id } } }" }' \
+            -d '{"query": "query { repository(owner: \"vchinnap\", name: \"CloudOps-Discussions\") { discussion(number: '"$DISCUSSION_NUMBER"') { id } } }" }' \
             https://api.github.com/graphql | jq -r '.data.repository.discussion.id')
 
-          echo "Discussion ID: $DISCUSSION_ID"
+          echo "Fetched Discussion ID: $DISCUSSION_ID"
 
-          # Delete the discussion
-          curl -s -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -X POST \
-            -d "{\"query\": \"mutation { deleteDiscussion(input: {discussionId: \\\"$DISCUSSION_ID\\\"}) { clientMutationId } }\"}" \
-            https://api.github.com/graphql
+          # Check if we successfully retrieved a valid discussion ID
+          if [ "$DISCUSSION_ID" != "null" ]; then
+            echo "Deleting discussion with ID: $DISCUSSION_ID"
+            
+            # Delete the discussion
+            DELETE_RESPONSE=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -X POST \
+              -d "{\"query\": \"mutation { deleteDiscussion(input: {id: \\\"$DISCUSSION_ID\\\"}) { clientMutationId } }\"}" \
+              https://api.github.com/graphql)
 
-          echo "Discussion #${{ env.DISCUSSION_NUMBER }} has been deleted."
+            echo "Delete Response: $DELETE_RESPONSE"
+
+            if echo "$DELETE_RESPONSE" | grep -q 'clientMutationId'; then
+              echo "Discussion #${DISCUSSION_NUMBER} has been successfully deleted."
+            else
+              echo "Error: Unable to delete the discussion. Response: $DELETE_RESPONSE"
+              exit 1
+            fi
+          else
+            echo "Error: Unable to retrieve a valid discussion ID for discussion #${DISCUSSION_NUMBER}."
+            exit 1
+          fi

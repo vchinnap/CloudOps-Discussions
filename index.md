@@ -276,17 +276,18 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 20
-- **Open Discussions**: 14
+- **Total Discussions**: 21
+- **Open Discussions**: 15
 - **Closed Discussions**: 6
 
 ### Discussions by Category
 
 | Category       | Discussion Count |
 |----------------|------------------|
-| ServiceNow | 5 |
+| ServiceNow | 6 |
 | JIRA | 6 |
 | Teams | 6 |
 | Q&A | 2 |
@@ -304,7 +305,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 20 |
+| @vchinnap | 21 |
 
 ### Most Engaging Discussions
 

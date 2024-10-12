@@ -4,6 +4,9 @@ on:
   discussion:
     types: [created]
 
+permissions:
+  issues: write
+
 jobs:
   label_discussion:
     runs-on: ubuntu-latest

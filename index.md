@@ -280,10 +280,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 21
-- **Open Discussions**: 15
+- **Total Discussions**: 22
+- **Open Discussions**: 16
 - **Closed Discussions**: 6
 
 ### Discussions by Category
@@ -295,7 +296,7 @@
 | Teams | 6 |
 | Q&A | 2 |
 | Channels | 1 |
-| Ideas | 1 |
+| Ideas | 2 |
 
 ### Recent Discussions
 
@@ -309,7 +310,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 21 |
+| @vchinnap | 22 |
 
 ### Most Engaging Discussions
 

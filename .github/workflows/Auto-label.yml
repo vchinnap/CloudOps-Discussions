@@ -20,7 +20,7 @@ jobs:
           # Fetch discussion details to check if a label exists
           DISCUSSION_LABELS=$(curl -s -H "Authorization: token $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.discussion.number }} | jq '.labels | length')
+            https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }} | jq '.labels | length')
 
           if [ "$DISCUSSION_LABELS" -eq 0 ]; then
             echo "No labels found, adding default label: $LABEL"
@@ -28,7 +28,7 @@ jobs:
             # Adding the label using GitHub Issues API (works for discussions too)
             curl -X POST -H "Authorization: token $GH_TOKEN" \
               -H "Accept: application/vnd.github+json" \
-              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
+              https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }}/labels \
               -d "{\"labels\":[\"$LABEL\"]}"
 
             echo "Label $LABEL has been added to discussion #${{ github.event.discussion.number }}"

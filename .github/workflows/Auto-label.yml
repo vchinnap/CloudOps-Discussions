@@ -1,11 +1,11 @@
 name: Get Discussion Data
 
-description: This GitHub Actions workflow retrieves detailed information about a specific discussion in a repository using GitHub GraphQL API.
+description: This GitHub Actions workflow retrieves detailed information about a specific discussion in a repository using GitHub REST API.
 
 on:
   workflow_dispatch:
     inputs:
-      discussion_number: 
+      discussion_number:
         description: 'The number of the discussion to retrieve'
         required: true
         type: string
@@ -22,17 +22,10 @@ jobs:
           DISCUSSION_NUMBER=${{ github.event.inputs.discussion_number }}
           echo "Fetching discussion data for discussion number: $DISCUSSION_NUMBER"
 
-          # Define the GraphQL query to fetch discussion details
-          GRAPHQL_QUERY='{
-            "query": "query { repository(owner: \\\"vchinnap\\\", name: \\\"CloudOps-Discussions\\\") { discussion(number: '$DISCUSSION_NUMBER') { id, title, body, category { name }, author { login }, createdAt, lastEditedAt, url, comments(first: 10) { nodes { author { login }, body, createdAt } } } } }"
-          }'
-
-          # Fetch the discussion details using GitHub GraphQL API
+          # Fetch the discussion details using GitHub REST API
           DISCUSSION_DATA=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
-            -X POST \
-            -d "$GRAPHQL_QUERY" \
-            https://api.github.com/graphql)
+            https://api.github.com/repos/vchinnap/CloudOps-Discussions/discussions/$DISCUSSION_NUMBER)
 
           # Format and print the discussion details nicely
           echo "Fetched Discussion Data:"

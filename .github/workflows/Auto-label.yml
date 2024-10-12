@@ -1,44 +1,39 @@
-name: Label Discussions
+name: Categorize Discussions
 
 on:
   discussion:
     types: [created]
 
-permissions:
-  issues: write
-
 jobs:
-  label_discussion:
+  categorize_discussion:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Add default label to discussion
+      - name: Fetch and print discussion category
         env:
           GH_TOKEN: ${{ secrets.G_TOKEN }}
-          DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
-          LABEL: ideas
         run: |
           echo "Fetching discussion details for #${{ github.event.discussion.number }}"
 
-          # Fetch discussion details to check if labels exist
+          # Fetch discussion details
           DISCUSSION_RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }})
-          
+
+          # Log the full discussion response for debugging purposes
           echo "Discussion response: $DISCUSSION_RESPONSE"
-          
-          # Parse the labels array to check if it's empty
-          DISCUSSION_LABELS=$(echo "$DISCUSSION_RESPONSE" | jq '.labels | length')
-          echo "Labels found: $DISCUSSION_LABELS"
-          
-          if [ "$DISCUSSION_LABELS" -eq 0 ]; then
-            echo "No labels found, adding label $LABEL."
-            
-            # Adding the label using the GitHub API
-            curl -X POST -H "Authorization: token $GH_TOKEN" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
-              -d "{\"labels\":[\"$LABEL\"]}"
+
+          # Extract the category name
+          CATEGORY=$(echo "$DISCUSSION_RESPONSE" | jq -r '.category.name')
+
+          # Print the category
+          echo "Discussion category is: $CATEGORY"
+
+          # Optional: Based on the category, perform further actions here
+          # For example:
+          if [ "$CATEGORY" == "Ideas" ]; then
+            echo "This is an 'Ideas' discussion."
+            # Add further automation for discussions categorized as 'Ideas'
           else
-            echo "Labels already exist."
+            echo "This is not categorized as 'Ideas'."
           fi

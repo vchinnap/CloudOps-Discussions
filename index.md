@@ -225,6 +225,7 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 20
@@ -236,10 +237,9 @@
 | Category       | Discussion Count |
 |----------------|------------------|
 | ServiceNow | 5 |
-| JIRA | 5 |
+| JIRA | 6 |
 | Teams | 6 |
 | Q&A | 2 |
-| Ideas | 1 |
 | Channels | 1 |
 
 ### Recent Discussions

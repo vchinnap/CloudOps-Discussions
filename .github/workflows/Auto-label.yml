@@ -12,26 +12,14 @@ jobs:
       - name: Add default label if missing
         env:
           GH_TOKEN: ${{ secrets.G_TOKEN }}
-          DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
-          LABEL: ideas  # Set your default label here
+          LABEL: ideas  # Change this label to any default label you want
         run: |
-          echo "Checking discussion #${{ github.event.discussion.number }} for labels"
+          echo "Adding default label to discussion #${{ github.event.discussion.number }}"
 
-          # Fetch discussion details to check if a label exists
-          DISCUSSION_LABELS=$(curl -s -H "Authorization: token $GH_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }} | jq '.labels | length')
+          # Add the default label using the Issues API (works for discussions too)
+          curl -X POST -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
+            -d "{\"labels\":[\"$LABEL\"]}"
 
-          if [ "$DISCUSSION_LABELS" -eq 0 ]; then
-            echo "No labels found, adding default label: $LABEL"
-
-            # Adding the label using GitHub Issues API (works for discussions too)
-            curl -X POST -H "Authorization: token $GH_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }}/labels \
-              -d "{\"labels\":[\"$LABEL\"]}"
-
-            echo "Label $LABEL has been added to discussion #${{ github.event.discussion.number }}"
-          else
-            echo "Labels already exist for this discussion, no action taken."
-          fi
+          echo "Label $LABEL has been added to discussion #${{ github.event.discussion.number }}"

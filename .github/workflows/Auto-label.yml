@@ -1,26 +1,43 @@
-name: Label Discussions
+name: Ensure Discussion Category
 
 on:
   discussion:
     types: [created]
 
 jobs:
-  label_discussion:
+  categorize_discussion:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Add label to discussion
+      - name: Fetch and ensure discussion is in "Ideas" category
         env:
           GH_TOKEN: ${{ secrets.G_TOKEN }}
-          DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
-          LABEL: ideas
         run: |
-          echo "Adding label $LABEL to discussion #${{ github.event.discussion.number }}"
+          echo "Fetching discussion details for #${{ github.event.discussion.number }}"
 
-          # Adding the label using the GitHub Issues API (works for discussions as well)
-          RESPONSE=$(curl -s -X POST -H "Authorization: token $GH_TOKEN" \
+          # Fetch discussion details
+          DISCUSSION_RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
-            -d "{\"labels\":[\"$LABEL\"]}")
+            https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }})
 
-          echo "Response: $RESPONSE"
+          # Log the full discussion response for debugging purposes
+          echo "Discussion response: $DISCUSSION_RESPONSE"
+
+          # Extract the category name
+          CATEGORY=$(echo "$DISCUSSION_RESPONSE" | jq -r '.category.name')
+
+          # Print the category
+          echo "Discussion category is: $CATEGORY"
+
+          # Check if the discussion is not in the 'Ideas' category
+          if [ "$CATEGORY" != "Ideas" ]; then
+            echo "This discussion is not in the 'Ideas' category. Please update the category manually."
+
+            # Provide instructions for manually updating the category
+            echo "To move this discussion to the 'Ideas' category:"
+            echo "1. Go to the discussion at: https://github.com/${{ github.repository }}/discussions/${{ github.event.discussion.number }}"
+            echo "2. Click 'Edit' next to the discussion category."
+            echo "3. Select 'Ideas' from the dropdown and save your changes."
+          else
+            echo "This discussion is already in the 'Ideas' category."
+          fi

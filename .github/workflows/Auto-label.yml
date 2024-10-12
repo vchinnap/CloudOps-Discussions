@@ -1,43 +1,37 @@
-name: Ensure Discussion Category
+name: Auto-label Discussions
 
 on:
   discussion:
     types: [created]
 
 jobs:
-  categorize_discussion:
+  auto_label_discussion:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Fetch and ensure discussion is in "Ideas" category
+      - name: Add default label if missing
         env:
           GH_TOKEN: ${{ secrets.G_TOKEN }}
+          DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
+          LABEL: ideas  # Set your default label here
         run: |
-          echo "Fetching discussion details for #${{ github.event.discussion.number }}"
+          echo "Checking discussion #${{ github.event.discussion.number }} for labels"
 
-          # Fetch discussion details
-          DISCUSSION_RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" \
+          # Fetch discussion details to check if a label exists
+          DISCUSSION_LABELS=$(curl -s -H "Authorization: token $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }})
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.discussion.number }} | jq '.labels | length')
 
-          # Log the full discussion response for debugging purposes
-          echo "Discussion response: $DISCUSSION_RESPONSE"
+          if [ "$DISCUSSION_LABELS" -eq 0 ]; then
+            echo "No labels found, adding default label: $LABEL"
 
-          # Extract the category name
-          CATEGORY=$(echo "$DISCUSSION_RESPONSE" | jq -r '.category.name')
+            # Adding the label using GitHub Issues API (works for discussions too)
+            curl -X POST -H "Authorization: token $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
+              -d "{\"labels\":[\"$LABEL\"]}"
 
-          # Print the category
-          echo "Discussion category is: $CATEGORY"
-
-          # Check if the discussion is not in the 'Ideas' category
-          if [ "$CATEGORY" != "Ideas" ]; then
-            echo "This discussion is not in the 'Ideas' category. Please update the category manually."
-
-            # Provide instructions for manually updating the category
-            echo "To move this discussion to the 'Ideas' category:"
-            echo "1. Go to the discussion at: https://github.com/${{ github.repository }}/discussions/${{ github.event.discussion.number }}"
-            echo "2. Click 'Edit' next to the discussion category."
-            echo "3. Select 'Ideas' from the dropdown and save your changes."
+            echo "Label $LABEL has been added to discussion #${{ github.event.discussion.number }}"
           else
-            echo "This discussion is already in the 'Ideas' category."
+            echo "Labels already exist for this discussion, no action taken."
           fi

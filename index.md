@@ -415,10 +415,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 20
-- **Open Discussions**: 14
+- **Total Discussions**: 21
+- **Open Discussions**: 15
 - **Closed Discussions**: 6
 
 ### Discussions by Category
@@ -430,6 +431,7 @@
 | Teams | 6 |
 | Q&A | 2 |
 | Channels | 1 |
+| Polls | 1 |
 
 ### Recent Discussions
 
@@ -443,7 +445,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 20 |
+| @vchinnap | 21 |
 
 ### Most Engaging Discussions
 

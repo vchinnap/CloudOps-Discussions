@@ -23,7 +23,7 @@ jobs:
           elif [[ "$CATEGORY" == "Q&A" ]]; then
             LABEL="CloudOperations"
           elif [[ "$CATEGORY" == "Ideas" ]]; then
-            LABEL="ideas"
+            LABEL="Ideas"
           elif [[ "$CATEGORY" == "Channels" ]]; then
             LABEL="Channels"
           elif [[ "$CATEGORY" == "Announcements" ]]; then
@@ -38,4 +38,4 @@ jobs:
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             /repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }}/labels \
-            -f labels='["'"$LABEL"'"]'
+            -f labels="[\"$LABEL\"]"

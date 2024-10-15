@@ -1,32 +1,36 @@
-name: Get Discussion Data
-
-description: This GitHub Actions workflow retrieves detailed information about a specific discussion in a repository using GitHub REST API.
+name: Auto Label Discussions by Category
 
 on:
-  workflow_dispatch:
-    inputs:
-      discussion_number:
-        description: 'The number of the discussion to retrieve'
-        required: true
-        type: string
+  discussion:
+    types: [created]
 
 jobs:
-  get_discussion_data:
+  add_label_based_on_category:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Fetch Complete Discussion Data
+      - name: Check discussion category and add label
         env:
-          GH_TOKEN: ${{ secrets.G_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}  # Make sure your token has proper permissions
         run: |
-          DISCUSSION_NUMBER=${{ github.event.inputs.discussion_number }}
-          echo "Fetching discussion data for discussion number: $DISCUSSION_NUMBER"
+          CATEGORY_NAME=$(echo "${{ github.event.discussion.category.name }}" | tr '[:upper:]' '[:lower:]')
 
-          # Fetch the discussion details using GitHub REST API
-          DISCUSSION_DATA=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+          if [[ "$CATEGORY_NAME" == "jira" ]]; then
+            LABEL="Jira"
+          elif [[ "$CATEGORY_NAME" == "servicenow" ]]; then
+            LABEL="ServiceNow"
+          elif [[ "$CATEGORY_NAME" == "fusion friday" ]]; then
+            LABEL="FusionFriday"
+          elif [[ "$CATEGORY_NAME" == "q&a" ]]; then
+            LABEL="CloudOperations"
+          else
+            echo "No matching category found. No label will be added."
+            exit 0
+          fi
+
+          # Add the label to the discussion using GitHub Discussions API
+          curl -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/vchinnap/CloudOps-Discussions/discussions/$DISCUSSION_NUMBER)
-
-          # Format and print the discussion details nicely
-          echo "Fetched Discussion Data:"
-          echo "$DISCUSSION_DATA" | jq .
+            https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.id }}/labels \
+            -d "{\"labels\":[\"$LABEL\"]}"

@@ -1,9 +1,7 @@
 ---
 name: "Jira-like Issue Form"
 description: "Use this template to submit an issue or task request"
-title: "[ISSUE] <Title of the issue>"
-labels: ["Jira", "bug", "enhancement", "task"]  # Default label 'Jira' and other optional labels
-assignees: ["vinod"]  # Default assignee, adjust as needed
+labels: ["Jira"]  # Default Jira label for discussions
 ---
 
 ## Issue Type
@@ -52,4 +50,4 @@ assignees: ["vinod"]  # Default assignee, adjust as needed
 > _Provide additional information here..._
 
 ---
-<!-- After filling in the template, submit it as a new discussion or issue! -->
+<!-- Submit your issue using this discussion form! -->

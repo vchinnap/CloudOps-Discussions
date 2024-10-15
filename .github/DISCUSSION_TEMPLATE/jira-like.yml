@@ -1,0 +1,55 @@
+---
+name: "Jira-like Issue Form"
+description: "Use this template to submit an issue or task request"
+title: "[ISSUE] <Title of the issue>"
+labels: ["Jira", "bug", "enhancement", "task"]  # Default label 'Jira' and other optional labels
+assignees: ["vinod"]  # Default assignee, adjust as needed
+---
+
+## Issue Type
+<!-- Choose the type of issue -->
+- [ ] Bug
+- [ ] Task
+- [ ] Story
+- [ ] Improvement
+
+## Priority
+<!-- Choose the priority level -->
+- [ ] High
+- [ ] Medium
+- [ ] Low
+
+## Summary
+<!-- Provide a brief summary of the issue -->
+> _Enter summary here..._
+
+## Description
+<!-- Provide a detailed description of the issue -->
+> _Enter description here..._
+
+## Steps to Reproduce (For Bugs)
+<!-- If this is a bug, please provide steps to reproduce the issue -->
+1. Step 1
+2. Step 2
+3. Step 3
+
+## Expected Outcome
+<!-- Describe the expected outcome -->
+> _Describe expected result here..._
+
+## Actual Outcome
+<!-- Describe what actually happened -->
+> _Describe actual result here..._
+
+## Acceptance Criteria
+<!-- Define what the outcome should be for this issue to be considered resolved -->
+- [ ] Criteria 1
+- [ ] Criteria 2
+- [ ] Criteria 3
+
+## Additional Information
+<!-- Include any other details such as logs, screenshots, or related discussions -->
+> _Provide additional information here..._
+
+---
+<!-- After filling in the template, submit it as a new discussion or issue! -->

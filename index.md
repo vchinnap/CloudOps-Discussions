@@ -695,11 +695,12 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 24
-- **Open Discussions**: 18
-- **Closed Discussions**: 6
+- **Open Discussions**: 17
+- **Closed Discussions**: 7
 
 ### Discussions by Category
 

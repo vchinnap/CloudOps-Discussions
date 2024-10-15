@@ -706,6 +706,7 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 24
@@ -719,10 +720,10 @@
 | ServiceNow | 5 |
 | JIRA | 5 |
 | Teams | 7 |
-| Q&A | 3 |
+| Q&A | 2 |
 | Ideas | 2 |
 | Channels | 1 |
-| Fusion Friday | 1 |
+| Fusion Friday | 2 |
 
 ### Recent Discussions
 

@@ -658,10 +658,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 21
-- **Open Discussions**: 15
+- **Total Discussions**: 22
+- **Open Discussions**: 16
 - **Closed Discussions**: 6
 
 ### Discussions by Category
@@ -672,7 +673,7 @@
 | JIRA | 5 |
 | Teams | 6 |
 | Q&A | 2 |
-| Ideas | 1 |
+| Ideas | 2 |
 | Channels | 1 |
 | Alerts | 1 |
 
@@ -688,13 +689,13 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 21 |
+| @vchinnap | 22 |
 
 ### Most Engaging Discussions
 
+- [Rewatch](https://github.com/vchinnap/CloudOps-Discussions/discussions/19) - 6 comments
 - [please provide L2 support contact](https://github.com/vchinnap/CloudOps-Discussions/discussions/6) - 3 comments
 - [L2 support confluence document updated](https://github.com/vchinnap/CloudOps-Discussions/discussions/7) - 3 comments
-- [Rewatch](https://github.com/vchinnap/CloudOps-Discussions/discussions/19) - 3 comments
 - [EC2 down long term solution](https://github.com/vchinnap/CloudOps-Discussions/discussions/4) - 2 comments
 - [What is the difference between Hibernation vs Stopping](https://github.com/vchinnap/CloudOps-Discussions/discussions/17) - 2 comments
 

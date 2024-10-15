@@ -657,6 +657,7 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 21
@@ -673,7 +674,7 @@
 | Q&A | 2 |
 | Ideas | 1 |
 | Channels | 1 |
-| Polls | 1 |
+| Alerts | 1 |
 
 ### Recent Discussions
 

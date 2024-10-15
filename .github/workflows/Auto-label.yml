@@ -38,5 +38,5 @@ jobs:
             -X POST \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
-            /repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
+            /repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }}/labels \
             -d '{"labels":["'"$LABEL"'"]}'

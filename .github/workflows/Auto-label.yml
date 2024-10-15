@@ -1,8 +1,8 @@
 name: Auto-Assign Labels to Discussions Based on Category
 
 on:
-  discussions:
-    types: [created]
+  discussion:
+    types: [created, edited]
 
 jobs:
   assign-label:

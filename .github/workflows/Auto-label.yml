@@ -1,36 +1,36 @@
-name: Auto Label Discussions by Category
+name: Auto-Assign Labels to Discussions Based on Category
 
 on:
-  discussion:
+  discussions:
     types: [created]
 
 jobs:
-  add_label_based_on_category:
+  assign-label:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check discussion category and add label
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Assign Label based on Category
         env:
-          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}  # Make sure your token has proper permissions
+          GITHUB_TOKEN: ${{ secrets.G_TOKEN }} # Use your token here
         run: |
-          CATEGORY_NAME=$(echo "${{ github.event.discussion.category.name }}" | tr '[:upper:]' '[:lower:]')
+          CATEGORY="${{ github.event.discussion.category.name }}"
 
-          if [[ "$CATEGORY_NAME" == "jira" ]]; then
-            LABEL="Jira"
-          elif [[ "$CATEGORY_NAME" == "servicenow" ]]; then
-            LABEL="ServiceNow"
-          elif [[ "$CATEGORY_NAME" == "fusion friday" ]]; then
+          if [[ "$CATEGORY" == "Fusion Friday" ]]; then
             LABEL="FusionFriday"
-          elif [[ "$CATEGORY_NAME" == "q&a" ]]; then
+          elif [[ "$CATEGORY" == "Q&A" ]]; then
             LABEL="CloudOperations"
-          else
-            echo "No matching category found. No label will be added."
-            exit 0
-          fi
+          elif [[ "$CATEGORY" == "Ideas" ]]; then
+            LABEL="Ideas"
+          elif [[ "$CATEGORY" == "Channels" ]]; then
+            LABEL="Channels"
+          # Add more categories and corresponding labels as needed
 
-          # Add the label to the discussion using GitHub Discussions API
-          curl -X POST \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
+          # Apply the label to the discussion
+          gh api \
+            -X POST \
+            -H "Authorization: token ${{ secrets.G_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/discussions/${{ github.event.discussion.id }}/labels \
-            -d "{\"labels\":[\"$LABEL\"]}"
+            /repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
+            -d '{"labels":["'"$LABEL"'"]}'

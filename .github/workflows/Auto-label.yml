@@ -1,8 +1,8 @@
 name: Auto-Assign Labels to Discussions Based on Category
 
 on:
-  discussion:
-    types: [created, edited]
+  discussions:
+    types: [created]
 
 jobs:
   assign-label:
@@ -11,9 +11,13 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get install gh -y
+
       - name: Assign Label based on Category
         env:
-          GITHUB_TOKEN: ${{ secrets.G_TOKEN }} # Use your token here
+          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
         run: |
           CATEGORY="${{ github.event.discussion.category.name }}"
 
@@ -27,10 +31,12 @@ jobs:
             LABEL="Channels"
           # Add more categories and corresponding labels as needed
 
+          echo "Assigning label: $LABEL"
+
           # Apply the label to the discussion
           gh api \
             -X POST \
-            -H "Authorization: token ${{ secrets.G_TOKEN }}" \
+            -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             /repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
             -d '{"labels":["'"$LABEL"'"]}'

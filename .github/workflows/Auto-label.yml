@@ -11,32 +11,31 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Install GitHub CLI
-        run: |
-          sudo apt-get install gh -y
-
       - name: Assign Label based on Category
         env:
           GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
         run: |
           CATEGORY="${{ github.event.discussion.category.name }}"
 
+          # Map categories to labels
           if [[ "$CATEGORY" == "Fusion Friday" ]]; then
             LABEL="FusionFriday"
           elif [[ "$CATEGORY" == "Q&A" ]]; then
             LABEL="CloudOperations"
           elif [[ "$CATEGORY" == "Ideas" ]]; then
-            LABEL="Ideas"
+            LABEL="ideas"
           elif [[ "$CATEGORY" == "Channels" ]]; then
             LABEL="Channels"
+          elif [[ "$CATEGORY" == "Announcements" ]]; then
+            LABEL="Announcements"
           # Add more categories and corresponding labels as needed
 
           echo "Assigning label: $LABEL"
 
-          # Apply the label to the discussion
+          # Apply the label to the discussion using the correct GitHub API for discussions
           gh api \
             -X POST \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             /repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }}/labels \
-            -d '{"labels":["'"$LABEL"'"]}'
+            -f labels='["'"$LABEL"'"]'

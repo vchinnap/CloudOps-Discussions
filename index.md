@@ -800,10 +800,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 22
-- **Open Discussions**: 16
+- **Total Discussions**: 23
+- **Open Discussions**: 17
 - **Closed Discussions**: 6
 
 ### Discussions by Category
@@ -816,6 +817,7 @@
 | Q&A | 2 |
 | Ideas | 2 |
 | Channels | 1 |
+| Fusion Friday | 1 |
 
 ### Recent Discussions
 
@@ -829,7 +831,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 22 |
+| @vchinnap | 23 |
 
 ### Most Engaging Discussions
 

@@ -1,0 +1,43 @@
+title: "Enter the title of your incident or change ticket"
+labels: ["ServiceNow"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please provide all necessary details related to the incident or change ticket for Cloud Operations.
+
+  - type: input
+    id: change_ticket
+    attributes:
+      label: Change/Incident Ticket
+      description: Please enter the related ServiceNow Change or Incident ticket number.
+      placeholder: "INC0123456 or CHG0123456"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of Issue
+      description: Provide a detailed description of the issue or ticket.
+      placeholder: "Describe the incident or change request in detail..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: resolution
+    attributes:
+      label: Resolution or Follow-Up Actions
+      description: Provide any follow-up actions or resolutions related to the ticket.
+      placeholder: "Describe any steps taken to resolve the issue..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Agreement to Code of Conduct
+      description: By submitting this form, you agree to follow our Code of Conduct.
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

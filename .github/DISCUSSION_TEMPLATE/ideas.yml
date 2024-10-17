@@ -1,0 +1,61 @@
+title: "[Idea] Enter the name of your idea"
+labels: ["ideas"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing your idea with us! Please fill out this form to provide as much information as possible to help us understand and consider your suggestion.
+
+  - type: input
+    id: idea_title
+    attributes:
+      label: Idea Name
+      description: What’s the title of your idea?
+      placeholder: "Enter a short, descriptive title for your idea"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this idea solve?
+      placeholder: "Describe the problem or challenge you're addressing"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: What’s your proposed solution or feature?
+      placeholder: "Explain how your idea or feature solves the problem"
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Potential Impact
+      description: What is the impact of this idea?
+      placeholder: "Explain how this idea benefits users, improves processes, or solves a key issue"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative solutions?
+      placeholder: "Describe any alternative ideas or features you’ve considered"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Agreement to Code of Conduct
+      description: By submitting this idea, you agree to follow our Code of Conduct.
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

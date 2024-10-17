@@ -5,12 +5,13 @@ body:
     attributes:
       value: |
         Thanks for sharing what you've learned on Fusion Friday! Please fill out this form as completely as possible.
+        **Note:** The Learning Topic should be the same as the title you entered above.
 
   - type: input
     id: title
     attributes:
       label: Learning Topic
-      description: What did you learn today?
+      description: What did you learn today? (Make sure this matches your discussion title)
       placeholder: "I learned about..."
     validations:
       required: true
@@ -27,7 +28,7 @@ body:
   - type: textarea
     id: benefit
     attributes:
-      label: How does it benefit BMO?
+      label: How does it benefit OMB?
       description: Explain how your learning benefits the Office of Management and Budget.
       placeholder: "This benefits OMB by..."
     validations:
@@ -41,4 +42,3 @@ body:
       placeholder: "The key takeaway for me was..."
     validations:
       required: true
-

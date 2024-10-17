@@ -1,5 +1,5 @@
 title: "[Question] Enter your question here"
-labels: ["Q&A"]
+labels: ["CloudOperations"]
 body:
   - type: markdown
     attributes:

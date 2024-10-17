@@ -901,11 +901,12 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 28
-- **Open Discussions**: 22
-- **Closed Discussions**: 6
+- **Open Discussions**: 21
+- **Closed Discussions**: 7
 
 ### Discussions by Category
 

@@ -1,41 +1,41 @@
-name: Auto-Assign Labels to Discussions Based on Category
+name: Append Label on Discussion Category Change
 
 on:
   discussion:
-    types: [created, edited]
+    types: [edited]
 
 jobs:
-  assign-label:
+  append_label:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Assign Label based on Category
-        env:
-          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
+      - name: Check if the category changed and append label
         run: |
-          CATEGORY="${{ github.event.discussion.category.name }}"
+          # Extract current and previous category names
+          CURRENT_CATEGORY="${{ github.event.discussion.category.name }}"
+          PREVIOUS_CATEGORY=$(jq -r '.changes.category.old_value.name' <<< "${{ toJson(github.event) }}")
 
-          # Map categories to labels
-          if [[ "$CATEGORY" == "Fusion Friday" ]]; then
-            LABEL="FusionFriday"
-          elif [[ "$CATEGORY" == "Q&A" ]]; then
-            LABEL="CloudOperations"
-          elif [[ "$CATEGORY" == "Ideas" ]]; then
-            LABEL="Ideas"
-          elif [[ "$CATEGORY" == "Channels" ]]; then
-            LABEL="Channels"
-          elif [[ "$CATEGORY" == "Announcements" ]]; then
-            LABEL="Announcements"
-          # Add more categories and corresponding labels as needed
+          echo "Current Category: $CURRENT_CATEGORY"
+          echo "Previous Category: $PREVIOUS_CATEGORY"
 
-          echo "Assigning label: $LABEL"
+          # Check if category changed
+          if [ "$CURRENT_CATEGORY" != "$PREVIOUS_CATEGORY" ]; then
+            echo "Category has changed. Applying new label based on the current category."
+            
+            # Define the label based on the new category
+            if [ "$CURRENT_CATEGORY" == "Jira" ]; then
+              LABEL_NAME="jira"
+            elif [ "$CURRENT_CATEGORY" == "ServiceNow" ]; then
+              LABEL_NAME="ServiceNow"
+            else
+              LABEL_NAME="Other"
+            fi
 
-          # Apply the label to the discussion using the correct GitHub API for discussions
-          gh api \
-            -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            /repos/${{ github.repository }}/discussions/${{ github.event.discussion.number }}/labels \
-            -f labels="[\"$LABEL\"]"
+            # Add the new label using GitHub API
+            curl -X POST \
+              -H "Authorization: token ${{ secrets.G_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.discussion.number }}/labels \
+              -d "{\"labels\":[\"$LABEL_NAME\"]}"
+          else
+            echo "No category change detected. No label will be added."
+          fi

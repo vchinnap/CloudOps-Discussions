@@ -898,10 +898,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 27
-- **Open Discussions**: 21
+- **Total Discussions**: 28
+- **Open Discussions**: 22
 - **Closed Discussions**: 6
 
 ### Discussions by Category
@@ -912,7 +913,7 @@
 | JIRA | 6 |
 | Teams | 7 |
 | Q&A | 2 |
-| Ideas | 3 |
+| Ideas | 4 |
 | Channels | 1 |
 | Fusion Friday | 2 |
 
@@ -928,7 +929,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 27 |
+| @vchinnap | 28 |
 
 ### Most Engaging Discussions
 

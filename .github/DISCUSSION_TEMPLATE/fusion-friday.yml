@@ -1,4 +1,4 @@
-title: "Enter the name of the Topic you Learned"
+title: "Topic you Learned about?"
 labels: ["FusionFriday"]
 body:
   - type: markdown

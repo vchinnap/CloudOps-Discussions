@@ -32,12 +32,3 @@ body:
       placeholder: "Describe any steps taken to resolve the issue..."
     validations:
       required: false
-
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Agreement to Code of Conduct
-      description: By submitting this form, you agree to follow our Code of Conduct.
-      options:
-        - label: I agree to follow this project's Code of Conduct
-          required: true

@@ -1,0 +1,65 @@
+name: Label Older Discussions as Duplicate
+
+on:
+  discussion:
+    types: [created]
+
+jobs:
+  check_duplicate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check for duplicate discussions
+      id: check_duplicate
+      env:
+        GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
+      run: |
+        NEW_TITLE="${{ github.event.discussion.title }}"
+        
+        # Fetch all existing discussions in the repo
+        EXISTING_DISCUSSIONS=$(gh api repos/${{ github.repository }}/discussions --jq '.[].{title, number}')
+        
+        # Loop through existing discussions to find a matching title
+        DUPLICATE_FOUND="false"
+        for DISCUSSION in $(echo "$EXISTING_DISCUSSIONS" | jq -c '.[]'); do
+          EXISTING_TITLE=$(echo "$DISCUSSION" | jq -r '.title')
+          EXISTING_NUMBER=$(echo "$DISCUSSION" | jq -r '.number')
+          if [[ "$EXISTING_TITLE" == "$NEW_TITLE" ]]; then
+            echo "Duplicate found in discussion #$EXISTING_NUMBER"
+            DUPLICATE_FOUND="true"
+            echo "$EXISTING_NUMBER" > duplicate_number.txt
+            break
+          fi
+        done
+
+        if [[ "$DUPLICATE_FOUND" == "true" ]]; then
+          echo "Duplicate discussion detected."
+        else
+          echo "No duplicate found."
+        fi
+
+    - name: Label the older discussion as duplicate
+      if: success() && steps.check_duplicate.outputs.DUPLICATE_FOUND == 'true'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          old_discussion_number=$(cat duplicate_number.txt)
+          github.rest.issues.addLabels({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: old_discussion_number,
+            labels: ["duplicate"]
+          })
+
+    - name: Add comment to older discussion
+      if: success() && steps.check_duplicate.outputs.DUPLICATE_FOUND == 'true'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          old_discussion_number=$(cat duplicate_number.txt)
+          github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: old_discussion_number,
+            body: "This discussion is marked as a duplicate of a newer discussion."
+          })

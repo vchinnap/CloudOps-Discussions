@@ -12,7 +12,7 @@ jobs:
     - name: Check for duplicate discussions
       id: check_duplicate
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
       run: |
         NEW_TITLE="${{ github.event.discussion.title }}"
 

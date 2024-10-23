@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set up GitHub CLI
+      run: |
+        sudo apt-get install jq
+
     - name: Check for duplicate discussions
       id: check_duplicate
       env:
@@ -19,12 +23,13 @@ jobs:
         # Convert the new title to lowercase
         NEW_TITLE_LOWER=$(echo "$NEW_TITLE" | tr '[:upper:]' '[:lower:]')
 
-        # Fetch all existing discussions in the repo
+        # Fetch all existing discussions in the repo and save them to a file
         EXISTING_DISCUSSIONS=$(gh api repos/${{ github.repository }}/discussions --jq '.[] | {title: .title, number: .number}')
+        echo "$EXISTING_DISCUSSIONS" > discussions.json
 
         # Loop through existing discussions to find a matching title
         DUPLICATE_FOUND="false"
-        for DISCUSSION in $(echo "$EXISTING_DISCUSSIONS" | jq -c '.'); do
+        for DISCUSSION in $(cat discussions.json | jq -c '.'); do
           EXISTING_TITLE=$(echo "$DISCUSSION" | jq -r '.title')
           EXISTING_NUMBER=$(echo "$DISCUSSION" | jq -r '.number')
 
@@ -41,6 +46,7 @@ jobs:
 
         if [[ "$DUPLICATE_FOUND" == "true" ]]; then
           echo "Duplicate discussion detected."
+          exit 1
         else
           echo "No duplicate found."
         fi

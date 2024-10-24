@@ -30,6 +30,7 @@ jobs:
 
         # Loop through existing discussions to find a matching title
         DUPLICATE_FOUND="false"
+        rm -f duplicate_number.txt  # Ensure this file is cleared
         for DISCUSSION in $(cat discussions.json | jq -c '.'); do
           EXISTING_TITLE=$(echo "$DISCUSSION" | jq -r '.title')
           EXISTING_NUMBER=$(echo "$DISCUSSION" | jq -r '.number')
@@ -57,23 +58,33 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const old_discussion_number = require('fs').readFileSync('duplicate_number.txt', 'utf8');
-          await github.issues.addLabels({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: old_discussion_number,
-            labels: ["duplicate"]
-          });
+          const fs = require('fs');
+          if (fs.existsSync('duplicate_number.txt')) {
+            const old_discussion_number = fs.readFileSync('duplicate_number.txt', 'utf8').trim();
+            await github.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: old_discussion_number,
+              labels: ["duplicate"]
+            });
+          } else {
+            console.log("No duplicate number file found.");
+          }
 
     - name: Add comment to older discussion
       if: failure()
       uses: actions/github-script@v6
       with:
         script: |
-          const old_discussion_number = require('fs').readFileSync('duplicate_number.txt', 'utf8');
-          await github.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: old_discussion_number,
-            body: "This discussion has been marked as a duplicate of a newer one."
-          });
+          const fs = require('fs');
+          if (fs.existsSync('duplicate_number.txt')) {
+            const old_discussion_number = fs.readFileSync('duplicate_number.txt', 'utf8').trim();
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: old_discussion_number,
+              body: "This discussion has been marked as a duplicate of a newer one."
+            });
+          } else {
+            console.log("No duplicate number file found.");
+          }

@@ -26,12 +26,11 @@ jobs:
 
         # Fetch all existing discussions in the repo and save them to a file
         EXISTING_DISCUSSIONS=$(gh api repos/${{ github.repository }}/discussions --jq '.[] | {title: .title, number: .number}')
-        echo "$EXISTING_DISCUSSIONS" > discussions.json
-
+        
         # Loop through existing discussions to find a matching title
         DUPLICATE_FOUND="false"
         rm -f duplicate_number.txt  # Ensure this file is cleared
-        for DISCUSSION in $(cat discussions.json | jq -c '.'); do
+        echo "$EXISTING_DISCUSSIONS" | jq -c '.' | while read -r DISCUSSION; do
           EXISTING_TITLE=$(echo "$DISCUSSION" | jq -r '.title')
           EXISTING_NUMBER=$(echo "$DISCUSSION" | jq -r '.number')
 

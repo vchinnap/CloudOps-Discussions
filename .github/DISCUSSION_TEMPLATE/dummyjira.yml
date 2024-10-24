@@ -1,6 +1,4 @@
-name: "Agile Jira Issue"
-description: "Create an issue similar to Jira Agile form"
-title: ""
+title: "Enter the issue summary"
 labels: ["Jira"]
 body:
   - type: markdown
@@ -9,25 +7,25 @@ body:
   - type: input
     id: summary
     attributes:
-      label: "Enter a summary"
-      description: "A brief summary of the issue or task."
-      placeholder: "E.g., Implement new feature X"
+      label: "Enter a brief summary"
+      description: "A short summary of the issue."
+      placeholder: "E.g., Implement feature X"
   - type: markdown
     attributes:
       value: "## Description"
   - type: textarea
     id: description
     attributes:
-      label: "Provide a detailed description"
-      description: "Details of the issue, task, or feature request."
-      placeholder: "E.g., What problem does this solve?"
+      label: "Description"
+      description: "Provide a detailed description of the issue or task."
+      placeholder: "Describe the problem, task, or feature request."
   - type: markdown
     attributes:
       value: "## Priority"
   - type: dropdown
     id: priority
     attributes:
-      label: "Select priority"
+      label: "Priority"
       options:
         - "Low"
         - "Medium"
@@ -38,7 +36,7 @@ body:
   - type: dropdown
     id: status
     attributes:
-      label: "Current status"
+      label: "Status"
       options:
         - "To Do"
         - "In Progress"
@@ -49,6 +47,6 @@ body:
   - type: input
     id: assignee
     attributes:
-      label: "Assign to"
-      description: "Who is responsible for this issue?"
-      placeholder: "GitHub username"
+      label: "Assign this to"
+      description: "Assign the task to a GitHub user."
+      placeholder: "@username"

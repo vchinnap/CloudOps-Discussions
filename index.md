@@ -1699,6 +1699,7 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 34
@@ -1734,7 +1735,7 @@
 
 ### Most Engaging Discussions
 
-- [DEMO: Do something with the below picture](https://github.com/vchinnap/CloudOps-Discussions/discussions/119) - 7 comments
+- [DEMO: Do something with picture](https://github.com/vchinnap/CloudOps-Discussions/discussions/119) - 7 comments
 - [Rewatch](https://github.com/vchinnap/CloudOps-Discussions/discussions/19) - 6 comments
 - [EC2 AD Join or Un-Join issue](https://github.com/vchinnap/CloudOps-Discussions/discussions/104) - 4 comments
 - [please provide L2 support contact](https://github.com/vchinnap/CloudOps-Discussions/discussions/6) - 3 comments

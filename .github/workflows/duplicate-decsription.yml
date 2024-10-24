@@ -9,9 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up GitHub CLI
+    - name: Set up GitHub CLI and jq
       run: |
-        sudo apt-get install jq
+        sudo apt-get update
+        sudo apt-get install jq gh -y
 
     - name: Check for duplicate discussions
       id: check_duplicate
@@ -56,23 +57,23 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          old_discussion_number=$(cat duplicate_number.txt)
-          github.rest.issues.addLabels({
+          const old_discussion_number = require('fs').readFileSync('duplicate_number.txt', 'utf8');
+          await github.issues.addLabels({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: old_discussion_number,
             labels: ["duplicate"]
-          })
+          });
 
     - name: Add comment to older discussion
       if: failure()
       uses: actions/github-script@v6
       with:
         script: |
-          old_discussion_number=$(cat duplicate_number.txt)
-          github.rest.issues.createComment({
+          const old_discussion_number = require('fs').readFileSync('duplicate_number.txt', 'utf8');
+          await github.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: old_discussion_number,
             body: "This discussion has been marked as a duplicate of a newer one."
-          })
+          });

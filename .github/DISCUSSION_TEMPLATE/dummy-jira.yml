@@ -1,4 +1,3 @@
-title: "Enter the issue summary"
 labels: ["Jira"]
 body:
   - type: markdown

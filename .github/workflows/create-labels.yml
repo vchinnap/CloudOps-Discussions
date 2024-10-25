@@ -18,7 +18,8 @@ jobs:
             { name: 'Vinod', color: 'ff5733', description: 'Knowledge Nuggets' },
             { name: 'Vinod1', color: 'f29513', description: 'Something is not working' },
             { name: 'Vinod11', color: 'a2eeef', description: 'New feature or request' },
-            { name: 'Vinod111', color: '0075ca', description: 'Improvements or additions to documentation' }
+            { name: 'Vinod111', color: '0075ca', description: 'Improvements or additions to documentation' },
+            { name: 'OneNote', color: '0075cb', description: 'Please label if the content is related to one-note' }
           ];
 
           for (const label of labelsToCreate) {

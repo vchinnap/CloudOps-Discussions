@@ -42,3 +42,24 @@ body:
       placeholder: "The key takeaway for me was..."
     validations:
       required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Poll: How valuable did you find this topic?
+
+        - 👍 Like
+        - 👎 Dislike
+        - ❤️ Love it!
+        - 🤔 Thought-Provoking
+        - 🚀 Ready to apply
+        - 📘 Informative, but needs more clarity
+
+        React with the emoji that best reflects your thoughts on this topic. Your feedback helps us improve our learning sessions!
+
+  - type: input
+    id: poll_feedback
+    attributes:
+      label: Additional Feedback (Optional)
+      description: Share any additional comments or suggestions.
+      placeholder: "Any other thoughts on this topic..."

@@ -2284,6 +2284,7 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 33
@@ -2298,9 +2299,9 @@
 | JIRA | 6 |
 | Teams | 7 |
 | Q&A | 2 |
-| Ideas | 4 |
+| Ideas | 3 |
 | Channels | 1 |
-| Fusion Friday | 2 |
+| Fusion Friday | 3 |
 | dummyjira | 1 |
 
 ### Recent Discussions

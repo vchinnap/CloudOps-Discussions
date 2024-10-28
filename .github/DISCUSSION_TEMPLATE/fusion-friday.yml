@@ -25,41 +25,20 @@ body:
     validations:
       required: true
 
-  - type: textarea
-    id: benefit
-    attributes:
-      label: How does it benefit BMO?
-      description: Explain how your learning benefits the Office of Management and Budget.
-      placeholder: "This benefits BMO by..."
-    validations:
-      required: true
+ # - type: textarea
+ #   id: benefit
+ #   attributes:
+ #     label: How does it benefit BMO?
+ #     description: Explain how your learning benefits the Office of Management and Budget.
+ #     placeholder: "This benefits BMO by..."
+ #   validations:
+ #     required: true
 
-  - type: textarea
-    id: impact
-    attributes:
-      label: Personal Takeaways
-      description: What were your key takeaways from this learning experience?
-      placeholder: "The key takeaway for me was..."
-    validations:
-      required: true
-
-  - type: markdown
-    attributes:
-      value: |
-        ### Poll: How valuable did you find this topic?
-
-        - 👍 Like
-        - 👎 Dislike
-        - ❤️ Love it!
-        - 🤔 Thought-Provoking
-        - 🚀 Ready to apply
-        - 📘 Informative, but needs more clarity
-
-        React with the emoji that best reflects your thoughts on this topic. Your feedback helps us improve our learning sessions!
-
-  - type: input
-    id: poll_feedback
-    attributes:
-      label: Additional Feedback (Optional)
-      description: Share any additional comments or suggestions.
-      placeholder: "Any other thoughts on this topic..."
+ # - type: textarea
+ #   id: impact
+ #   attributes:
+ #     label: Personal Takeaways
+ #    description: What were your key takeaways from this learning experience?
+ #     placeholder: "The key takeaway for me was..."
+ #   validations:
+ #     required: true

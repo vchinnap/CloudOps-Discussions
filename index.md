@@ -2251,10 +2251,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 34
-- **Open Discussions**: 26
+- **Total Discussions**: 33
+- **Open Discussions**: 25
 - **Closed Discussions**: 8
 
 ### Discussions by Category
@@ -2267,7 +2268,7 @@
 | Q&A | 2 |
 | Ideas | 4 |
 | Channels | 1 |
-| Fusion Friday | 3 |
+| Fusion Friday | 2 |
 | dummyjira | 1 |
 
 ### Recent Discussions
@@ -2282,7 +2283,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 34 |
+| @vchinnap | 33 |
 
 ### Most Engaging Discussions
 

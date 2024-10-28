@@ -1,0 +1,42 @@
+# File name: .github/DISCUSSION_TEMPLATE/test.yml
+
+name: Poll Discussion
+about: Open-ended discussion with optional voting
+title: "[POLL] - Your Input on {{ topic }}"
+labels: ["FusionFriday"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Poll Discussion Template
+
+        We value your input on the following topic. Please read the statement below, share your thoughts, and feel free to vote using 👍 or 👎.
+
+        **Poll Topic:** {{ topic }}
+
+  - type: textarea
+    attributes:
+      label: Your Thoughts
+      description: Share your opinion, insights, or suggestions on the topic above.
+      placeholder: "Type your thoughts here..."
+      value: ""
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Voting Instructions
+
+        - If you **agree** with the topic or find it **useful**, react with a 👍 (like).
+        - If you **disagree** or find it **unhelpful**, react with a 👎 (dislike).
+        - Feel free to add any additional comments or feedback below.
+
+        **Note**: This is an open-ended poll. Your participation helps us understand community preferences!
+
+  - type: textarea
+    attributes:
+      label: Additional Comments
+      description: Optional space for extra feedback or comments.
+      placeholder: "Any other comments..."
+      value: ""
+      required: false

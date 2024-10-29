@@ -16,15 +16,24 @@ jobs:
         id: parse_comment
         run: |
           COMMENT_BODY="${{ github.event.comment.body }}"
+          echo "Comment Body: $COMMENT_BODY"  # Debugging line to print the comment
+          
           if [[ "$COMMENT_BODY" =~ (start|stop|restart)\ EC2\ ([^ ]+) ]]; then
             ACTION="${BASH_REMATCH[1]}"
             INSTANCE_ID="${BASH_REMATCH[2]}"
             echo "action=$ACTION" >> $GITHUB_ENV
             echo "instance_id=$INSTANCE_ID" >> $GITHUB_ENV
+            echo "Extracted Action: $ACTION"
+            echo "Extracted Instance ID: $INSTANCE_ID"
           else
             echo "No valid action and instance ID found. Exiting workflow."
             exit 1
           fi
+
+      - name: Debugging - Print Variables
+        run: |
+          echo "Action: $ACTION"
+          echo "Instance ID: $INSTANCE_ID"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -53,3 +62,6 @@ jobs:
               exit 1
               ;;
           esac
+        env:
+          ACTION: ${{ env.action }}
+          INSTANCE_ID: ${{ env.instance_id }}

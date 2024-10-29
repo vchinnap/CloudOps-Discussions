@@ -1,0 +1,40 @@
+name: Stop EC2 on Discussion Comment
+
+on:
+  discussion_comment:
+    types: [created]
+
+jobs:
+  stop_ec2:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.comment.body == 'Stop EC2' }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check if comment contains 'Stop EC2'
+        id: check_comment
+        run: |
+          COMMENT_BODY="${{ github.event.comment.body }}"
+          if [[ "$COMMENT_BODY" == *"Stop EC2"* ]]; then
+            echo "Comment contains 'Stop EC2'. Proceeding with stopping EC2 instance."
+            echo "stop_instance=true" >> $GITHUB_ENV
+          else
+            echo "Comment does not contain 'Stop EC2'. Exiting workflow."
+            exit 1
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Stop EC2 Instance
+        if: ${{ env.stop_instance == 'true' }}
+        run: |
+          aws ec2 stop-instances --instance-ids ${{ secrets.EC2_INSTANCE_ID }}
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}

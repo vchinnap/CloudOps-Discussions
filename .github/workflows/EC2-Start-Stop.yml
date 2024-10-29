@@ -1,0 +1,55 @@
+name: Manage EC2 on Discussion Comment
+
+on:
+  discussion_comment:
+    types: [created]
+
+jobs:
+  manage_ec2:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Extract Action and Instance ID
+        id: parse_comment
+        run: |
+          COMMENT_BODY="${{ github.event.comment.body }}"
+          if [[ "$COMMENT_BODY" =~ (start|stop|restart)\ EC2\ ([^ ]+) ]]; then
+            ACTION="${BASH_REMATCH[1]}"
+            INSTANCE_ID="${BASH_REMATCH[2]}"
+            echo "action=$ACTION" >> $GITHUB_ENV
+            echo "instance_id=$INSTANCE_ID" >> $GITHUB_ENV
+          else
+            echo "No valid action and instance ID found. Exiting workflow."
+            exit 1
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Perform EC2 Action
+        run: |
+          case "$ACTION" in
+            start)
+              echo "Starting EC2 instance $INSTANCE_ID"
+              aws ec2 start-instances --instance-ids "$INSTANCE_ID"
+              ;;
+            stop)
+              echo "Stopping EC2 instance $INSTANCE_ID"
+              aws ec2 stop-instances --instance-ids "$INSTANCE_ID"
+              ;;
+            restart)
+              echo "Rebooting EC2 instance $INSTANCE_ID"
+              aws ec2 reboot-instances --instance-ids "$INSTANCE_ID"
+              ;;
+            *)
+              echo "Invalid action: $ACTION"
+              exit 1
+              ;;
+          esac

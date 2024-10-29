@@ -2402,6 +2402,7 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 34
@@ -2417,9 +2418,8 @@
 | Teams | 7 |
 | Q&A | 2 |
 | Ideas | 3 |
-| Channels | 1 |
+| Channels | 2 |
 | Fusion Friday | 3 |
-| dummyjira | 1 |
 
 ### Recent Discussions
 
@@ -2437,11 +2437,11 @@
 
 ### Most Engaging Discussions
 
+- [ec2 use cases](https://github.com/vchinnap/CloudOps-Discussions/discussions/125) - 7 comments
 - [Rewatch](https://github.com/vchinnap/CloudOps-Discussions/discussions/19) - 6 comments
 - [EC2 AD Join or Un-Join issue](https://github.com/vchinnap/CloudOps-Discussions/discussions/104) - 4 comments
 - [please provide L2 support contact](https://github.com/vchinnap/CloudOps-Discussions/discussions/6) - 3 comments
 - [L2 support confluence document updated](https://github.com/vchinnap/CloudOps-Discussions/discussions/7) - 3 comments
-- [EC2 down long term solution](https://github.com/vchinnap/CloudOps-Discussions/discussions/4) - 2 comments
 
 ### Unanswered Discussions
 

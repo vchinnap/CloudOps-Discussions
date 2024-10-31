@@ -38,7 +38,7 @@ body:
     id: impact
     attributes:
       label: Personal Takeaways
-     description: What were your key takeaways from this learning experience?
+      description: What were your key takeaways from this learning experience?
       placeholder: "The key takeaway for me was..."
     validations:
       required: true

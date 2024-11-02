@@ -1,0 +1,51 @@
+name: VM Management Request Handler
+
+on:
+  discussion:
+    types: [created, edited]
+
+jobs:
+  handle_vm_request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check discussion content
+        id: check_content
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const discussion = context.payload.discussion;
+            const body = discussion.body;
+            const requestTypeMatch = body.match(/VM Request Type: (.*)/);
+            const vmIdMatch = body.match(/VM ID or Name: (.*)/);
+            core.setOutput('request_type', requestTypeMatch ? requestTypeMatch[1].trim() : null);
+            core.setOutput('vm_id', vmIdMatch ? vmIdMatch[1].trim() : null);
+            
+      - name: Trigger Azure Automation Runbook
+        if: steps.check_content.outputs.request_type && steps.check_content.outputs.vm_id
+        uses: azure/CLI@v1
+        env:
+          AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        with:
+          inlineScript: |
+            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+            az account set --subscription $AZURE_SUBSCRIPTION
+            az automation runbook invoke --name "YourRunbookName" --resource-group "YourResourceGroup" --automation-account-name "YourAutomationAccount" --parameters vmId="${{ steps.check_content.outputs.vm_id }}" requestType="${{ steps.check_content.outputs.request_type }}"
+
+      - name: Update GitHub Discussion with Status
+        if: steps.check_content.outputs.request_type && steps.check_content.outputs.vm_id
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const octokit = github.getOctokit(core.getInput('github_token'));
+            const discussion_number = context.payload.discussion.number;
+            const requestType = '${{ steps.check_content.outputs.request_type }}';
+            await octokit.rest.discussions.createDiscussionComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              discussion_number: discussion_number,
+              body: `The request to ${requestType} the VM is being processed.`
+            });

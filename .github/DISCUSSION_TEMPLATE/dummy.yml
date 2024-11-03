@@ -1,44 +1,46 @@
-title: "Topic you Learned about?"
-labels: ["FusionFriday", "CloudOperations"]
+title: "VM Start/Stop Request"
+labels: ["Provision"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for sharing what you've learned on Fusion Friday! Please fill out this form as completely as possible.
-        **Note:** The Learning Topic should be the same as the title you entered above.
+        ### VM Start/Stop Request
+        Please fill out the information below to request a change in the power status of a virtual machine.
 
   - type: input
-    id: title
+    id: vm_name
     attributes:
-      label: Learning Topic
-      description: What did you learn today? (Make sure this matches your discussion title)
-      placeholder: "I learned about..."
+      label: VM Name
+      description: Enter the name of the virtual machine you want to control.
+      placeholder: "e.g., MyVirtualMachine"
+    validations:
+      required: true
+
+  - type: input
+    id: resource_group_name
+    attributes:
+      label: Resource Group Name
+      description: Enter the resource group containing the virtual machine.
+      placeholder: "e.g., MyResourceGroup"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: power_status
+    attributes:
+      label: Power Status
+      description: Select the desired power status for the VM.
+      options:
+        - start
+        - stop
     validations:
       required: true
 
   - type: textarea
-    id: description
+    id: justification
     attributes:
-      label: Description of Learning
-      description: Provide a detailed description of what you have learned.
-      placeholder: "Today, I learned..."
-    validations:
-      required: true
-
-  - type: textarea
-    id: benefit
-    attributes:
-      label: How does it benefit BMO?
-      description: Explain how your learning benefits the Office of Management and Budget.
-      placeholder: "This benefits BMO by..."
-    validations:
-      required: true
-
-  - type: textarea
-    id: impact
-    attributes:
-      label: Personal Takeaways
-      description: What were your key takeaways from this learning experience?
-      placeholder: "The key takeaway for me was..."
+      label: Justification
+      description: Provide a reason for starting or stopping the VM.
+      placeholder: "e.g., Testing server readiness for deployment."
     validations:
       required: true

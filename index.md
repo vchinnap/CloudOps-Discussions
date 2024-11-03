@@ -2957,10 +2957,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 35
-- **Open Discussions**: 27
+- **Total Discussions**: 37
+- **Open Discussions**: 29
 - **Closed Discussions**: 8
 
 ### Discussions by Category
@@ -2974,7 +2975,7 @@
 | Ideas | 3 |
 | Channels | 2 |
 | Fusion Friday | 3 |
-| Provisioning | 1 |
+| Provisioning | 3 |
 
 ### Recent Discussions
 
@@ -2988,7 +2989,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 35 |
+| @vchinnap | 37 |
 
 ### Most Engaging Discussions
 

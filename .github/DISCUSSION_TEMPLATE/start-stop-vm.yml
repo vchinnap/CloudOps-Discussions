@@ -1,13 +1,12 @@
-name: VM Power Status Change Request
-description: Request to start or stop a virtual machine by providing VM details.
-title: "[VM Start Stop]"
+name: "VM Start/Stop Request"
+description: "Request to start or stop a virtual machine by providing VM details."
+title: "[VM Start/Stop Request]"
 labels: ["Provision"]
 body:
   - type: markdown
     attributes:
       value: |
-        ### VM Power Status Change Request
-
+        ### VM Start/Stop Request
         Please fill in the details below to request a change in the VM power status.
 
   - type: input
@@ -40,6 +39,6 @@ body:
     id: justification
     attributes:
       label: Justification
-      description: "Briefly explain the reason for starting or stopping the VM"
+      description: "Provide a reason for starting or stopping the VM"
       placeholder: "e.g., Testing server readiness for deployment."
-      required: false
+      required: true

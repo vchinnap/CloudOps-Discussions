@@ -3112,10 +3112,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 39
-- **Open Discussions**: 31
+- **Total Discussions**: 40
+- **Open Discussions**: 32
 - **Closed Discussions**: 8
 
 ### Discussions by Category
@@ -3125,7 +3126,7 @@
 | ServiceNow | 10 |
 | JIRA | 7 |
 | Teams | 7 |
-| Q&A | 2 |
+| Q&A | 3 |
 | Ideas | 3 |
 | Channels | 2 |
 | Fusion Friday | 3 |
@@ -3144,7 +3145,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 39 |
+| @vchinnap | 40 |
 
 ### Most Engaging Discussions
 

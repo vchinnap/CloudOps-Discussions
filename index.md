@@ -3282,10 +3282,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 75
-- **Open Discussions**: 66
+- **Total Discussions**: 78
+- **Open Discussions**: 69
 - **Closed Discussions**: 9
 
 ### Discussions by Category
@@ -3298,10 +3299,10 @@
 | Q&A | 3 |
 | Ideas | 3 |
 | Channels | 2 |
-| Fusion Friday | 16 |
+| Fusion Friday | 18 |
 | Provisioning | 5 |
 | Automation hub | 8 |
-| SRE | 3 |
+| SRE | 4 |
 
 ### Recent Discussions
 
@@ -3315,7 +3316,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 75 |
+| @vchinnap | 78 |
 
 ### Most Engaging Discussions
 

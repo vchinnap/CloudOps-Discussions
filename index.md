@@ -3241,10 +3241,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 48
-- **Open Discussions**: 40
+- **Total Discussions**: 50
+- **Open Discussions**: 42
 - **Closed Discussions**: 8
 
 ### Discussions by Category
@@ -3252,7 +3253,7 @@
 | Category       | Discussion Count |
 |----------------|------------------|
 | ServiceNow | 10 |
-| JIRA | 8 |
+| JIRA | 10 |
 | Teams | 8 |
 | Q&A | 3 |
 | Ideas | 3 |
@@ -3274,7 +3275,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 48 |
+| @vchinnap | 50 |
 
 ### Most Engaging Discussions
 

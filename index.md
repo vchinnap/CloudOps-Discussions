@@ -3239,10 +3239,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 45
-- **Open Discussions**: 37
+- **Total Discussions**: 47
+- **Open Discussions**: 39
 - **Closed Discussions**: 8
 
 ### Discussions by Category
@@ -3250,14 +3251,14 @@
 | Category       | Discussion Count |
 |----------------|------------------|
 | ServiceNow | 10 |
-| JIRA | 7 |
+| JIRA | 8 |
 | Teams | 7 |
 | Q&A | 3 |
 | Ideas | 3 |
 | Channels | 2 |
 | Fusion Friday | 3 |
 | Provisioning | 4 |
-| stop start vm | 5 |
+| stop start vm | 6 |
 | Test | 1 |
 
 ### Recent Discussions
@@ -3272,7 +3273,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 45 |
+| @vchinnap | 47 |
 
 ### Most Engaging Discussions
 

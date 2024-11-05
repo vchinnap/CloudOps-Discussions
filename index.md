@@ -3261,10 +3261,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 67
-- **Open Discussions**: 59
+- **Total Discussions**: 69
+- **Open Discussions**: 61
 - **Closed Discussions**: 8
 
 ### Discussions by Category
@@ -3277,7 +3278,7 @@
 | Q&A | 3 |
 | Ideas | 3 |
 | Channels | 2 |
-| Fusion Friday | 10 |
+| Fusion Friday | 12 |
 | Provisioning | 5 |
 | stop start vm | 8 |
 | Test | 1 |
@@ -3294,7 +3295,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 67 |
+| @vchinnap | 69 |
 
 ### Most Engaging Discussions
 

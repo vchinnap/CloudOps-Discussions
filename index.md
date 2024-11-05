@@ -3267,11 +3267,12 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 73
-- **Open Discussions**: 65
-- **Closed Discussions**: 8
+- **Open Discussions**: 64
+- **Closed Discussions**: 9
 
 ### Discussions by Category
 

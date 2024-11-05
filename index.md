@@ -3268,10 +3268,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 73
-- **Open Discussions**: 64
+- **Total Discussions**: 75
+- **Open Discussions**: 66
 - **Closed Discussions**: 9
 
 ### Discussions by Category
@@ -3284,10 +3285,10 @@
 | Q&A | 3 |
 | Ideas | 3 |
 | Channels | 2 |
-| Fusion Friday | 15 |
+| Fusion Friday | 16 |
 | Provisioning | 5 |
 | stop start vm | 8 |
-| SRE | 2 |
+| SRE | 3 |
 
 ### Recent Discussions
 
@@ -3301,7 +3302,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 73 |
+| @vchinnap | 75 |
 
 ### Most Engaging Discussions
 

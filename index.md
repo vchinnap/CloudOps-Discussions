@@ -3272,6 +3272,7 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 75
@@ -3290,7 +3291,7 @@
 | Channels | 2 |
 | Fusion Friday | 16 |
 | Provisioning | 5 |
-| stop start vm | 8 |
+| Automation hub | 8 |
 | SRE | 3 |
 
 ### Recent Discussions

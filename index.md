@@ -3294,10 +3294,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 78
-- **Open Discussions**: 69
+- **Total Discussions**: 79
+- **Open Discussions**: 70
 - **Closed Discussions**: 9
 
 ### Discussions by Category
@@ -3314,6 +3315,7 @@
 | Provisioning | 5 |
 | Automation hub | 8 |
 | SRE | 4 |
+| Cloud Blog Post | 1 |
 
 ### Recent Discussions
 
@@ -3327,7 +3329,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 78 |
+| @vchinnap | 79 |
 
 ### Most Engaging Discussions
 

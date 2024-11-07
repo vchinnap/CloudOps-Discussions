@@ -3474,11 +3474,12 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 80
-- **Open Discussions**: 71
-- **Closed Discussions**: 9
+- **Open Discussions**: 70
+- **Closed Discussions**: 10
 
 ### Discussions by Category
 

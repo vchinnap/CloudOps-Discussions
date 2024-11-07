@@ -3494,6 +3494,7 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 82
@@ -3534,9 +3535,9 @@
 
 - [ec2 use cases](https://github.com/vchinnap/CloudOps-Discussions/discussions/125) - 7 comments
 - [Rewatch](https://github.com/vchinnap/CloudOps-Discussions/discussions/19) - 6 comments
+- [test](https://github.com/vchinnap/CloudOps-Discussions/discussions/249) - 5 comments
 - [EC2 AD Join or Un-Join issue](https://github.com/vchinnap/CloudOps-Discussions/discussions/104) - 4 comments
 - [please provide L2 support contact](https://github.com/vchinnap/CloudOps-Discussions/discussions/6) - 3 comments
-- [L2 support confluence document updated](https://github.com/vchinnap/CloudOps-Discussions/discussions/7) - 3 comments
 
 ### Unanswered Discussions
 

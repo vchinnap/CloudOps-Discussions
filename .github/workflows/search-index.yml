@@ -1,0 +1,32 @@
+name: Generate Search Index
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Generate Search Index
+        run: |
+          mkdir -p search
+          echo "[" > search/index.json
+          find docs -name "*.md" | while read -r file; do
+            title=$(head -1 "$file" | sed 's/# //')
+            path=$(realpath --relative-to=. "$file")
+            content=$(tail -n +2 "$file" | tr '\n' ' ' | sed 's/"/\\"/g')
+            echo "{\"title\": \"$title\", \"path\": \"$path\", \"content\": \"$content\"}," >> search/index.json
+          done
+          sed -i '$ s/,$//' search/index.json  # Remove trailing comma
+          echo "]" >> search/index.json
+
+      - name: Commit Search Index
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update search index"
+          file_pattern: search/index.json

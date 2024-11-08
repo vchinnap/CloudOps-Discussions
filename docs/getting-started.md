@@ -1,3 +1,11 @@
 # Getting Started
+Welcome to the documentation for [Your Project Name].
 
-Follow these steps to get started with the project.
+## Introduction
+Brief overview of the project.
+
+## Setup
+Steps to set up the project.
+
+## Usage
+Basic usage instructions.

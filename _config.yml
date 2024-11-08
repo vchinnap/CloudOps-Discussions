@@ -6,3 +6,15 @@ theme: just-the-docs
 markdown: kramdown
 #github:
 #  is_project_page: false
+
+
+
+just_the_docs:
+  collections:
+    navigation:
+      - title: "Introduction"
+        url: "/docs/getting-started"
+      - title: "Setup"
+        url: "/docs/setup"
+      - title: "Usage"
+        url: "/docs/usage"

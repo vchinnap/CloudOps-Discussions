@@ -1,21 +1,26 @@
-title: "Cloud Operations Discussions"
-description: "The centralized hub for cloud operations discussions, insights, and updates."
-baseurl: "/CloudOps-Discussions"
+##title: "Cloud Operations Discussions"
+##description: "The centralized hub for cloud operations discussions, insights, and updates."
+##baseurl: "/CloudOps-Discussions"
 #theme: jekyll-theme-cayman
-theme: just-the-docs
-markdown: kramdown
+##theme: just-the-docs
+##markdown: kramdown
 #github:
 #  is_project_page: false
 
 
 
+title: "Cloud Operations Discussions"
+description: "The centralized hub for cloud operations discussions"
+# baseurl: "/CloudOps-Discussions"  # Comment out for testing
+remote_theme: pmarsceill/just-the-docs
+markdown: kramdown
+
 just_the_docs:
   search_enabled: true
-  collections:
-    navigation:
-      - title: "Introduction"
-        url: "/docs/getting-started"
-      - title: "Setup"
-        url: "/docs/setup"
-      - title: "Usage"
-        url: "/docs/usage"
+  navigation:
+    - title: "Introduction"
+      url: "/docs/getting-started"
+    - title: "Setup"
+      url: "/docs/setup"
+    - title: "Usage"
+      url: "/docs/usage"

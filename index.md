@@ -12,8 +12,7 @@
 
 <input type="text" id="search-box" placeholder="Search docs..." oninput="searchDocs()" />
 <ul id="search-results"></ul>
-
-
+<script src="https://vchinnap.github.io/CloudOps-Discussions/assets/search.js"></script>
 
 
 

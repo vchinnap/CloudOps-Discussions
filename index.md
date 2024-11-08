@@ -10,6 +10,9 @@
 - [Getting Started](/docs/getting-started.md)
 - [Installation](/CloudOps-Discussions/docs/installation.md)
 
+<input type="text" id="search-box" placeholder="Search docs..." oninput="searchDocs()" />
+<ul id="search-results"></ul>
+
 
 
 

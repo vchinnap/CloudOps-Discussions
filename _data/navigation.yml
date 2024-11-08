@@ -1,1 +1,9 @@
-
+main:
+  - title: "Introduction"
+    url: "/docs/introduction"
+  - title: "Getting Started"
+    url: "/docs/getting-started"
+  - title: "Configuration"
+    url: "/docs/configuration"
+  - title: "Advanced Topics"
+    url: "/docs/advanced-topics"

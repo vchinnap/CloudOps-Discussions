@@ -1,7 +1,7 @@
-##title: "Cloud Operations Discussions"
-##description: "The centralized hub for cloud operations discussions, insights, and updates."
-##baseurl: "/CloudOps-Discussions"
-#theme: jekyll-theme-cayman
+title: "Cloud Operations Discussions"
+description: "The centralized hub for cloud operations discussions, insights, and updates."
+baseurl: "/CloudOps-Discussions"
+theme: jekyll-theme-cayman
 ##theme: just-the-docs
 ##markdown: kramdown
 #github:
@@ -9,24 +9,3 @@
 
 
 
-title: "Cloud Operations Discussions"
-description: "The centralized hub for cloud operations discussions"
-# Uncomment baseurl if you're using a project-specific URL on GitHub Pages
-# baseurl: "/CloudOps-Discussions" 
-
-remote_theme: pmarsceill/just-the-docs
-markdown: kramdown
-
-# Configuration specific to Just the Docs
-just_the_docs:
-  search_enabled: true
-  aux_links:
-    "GitHub Repository": "https://github.com/vchinnap/CloudOps-Discussions"
-  collections:
-    navigation:
-      - title: "Introduction"
-        url: "/docs/getting-started"
-      - title: "Setup"
-        url: "/docs/setup"
-      - title: "Usage"
-        url: "/docs/usage"

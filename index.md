@@ -7,7 +7,7 @@
 
 
 
-- [Getting Started](/CloudOps-Discussions/docs/getting-started.md)
+- [Getting Started](/docs/getting-started.md)
 - [Installation](/CloudOps-Discussions/docs/installation.md)
 
 

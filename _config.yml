@@ -10,6 +10,7 @@ markdown: kramdown
 
 
 just_the_docs:
+  search_enabled: true
   collections:
     navigation:
       - title: "Introduction"

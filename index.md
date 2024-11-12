@@ -4108,10 +4108,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 82
-- **Open Discussions**: 72
+- **Total Discussions**: 83
+- **Open Discussions**: 73
 - **Closed Discussions**: 10
 
 ### Discussions by Category
@@ -4127,7 +4128,7 @@
 | Fusion Friday | 19 |
 | Provisioning | 5 |
 | Automation hub | 8 |
-| SRE | 6 |
+| SRE | 7 |
 | Cloud Blog Post | 1 |
 
 ### Recent Discussions
@@ -4142,7 +4143,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 82 |
+| @vchinnap | 83 |
 
 ### Most Engaging Discussions
 

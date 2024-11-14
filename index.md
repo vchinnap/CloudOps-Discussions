@@ -4375,10 +4375,11 @@
 
 
 
+
 ## Additional Discussion Stats
 
-- **Total Discussions**: 83
-- **Open Discussions**: 73
+- **Total Discussions**: 85
+- **Open Discussions**: 75
 - **Closed Discussions**: 10
 
 ### Discussions by Category
@@ -4393,7 +4394,7 @@
 | Channels | 2 |
 | Fusion Friday | 19 |
 | Provisioning | 5 |
-| Automation hub | 8 |
+| Automation hub | 10 |
 | SRE | 7 |
 | Cloud Blog Post | 1 |
 
@@ -4409,7 +4410,7 @@
 
 | User         | Discussions Created |
 |--------------|---------------------|
-| @vchinnap | 83 |
+| @vchinnap | 85 |
 
 ### Most Engaging Discussions
 

@@ -4380,11 +4380,12 @@
 
 
 
+
 ## Additional Discussion Stats
 
 - **Total Discussions**: 85
-- **Open Discussions**: 75
-- **Closed Discussions**: 10
+- **Open Discussions**: 74
+- **Closed Discussions**: 11
 
 ### Discussions by Category
 
